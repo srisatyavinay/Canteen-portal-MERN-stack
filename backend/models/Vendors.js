@@ -43,7 +43,11 @@ const VendorSchema = new Schema2({
     vclose: {
         type: String,
         required: true
-    }
+    },
+	vpass: {
+		type: String,
+        required: true
+	},
 });
 
 module.exports = Vendor = mongoose.model("Vendors", VendorSchema);

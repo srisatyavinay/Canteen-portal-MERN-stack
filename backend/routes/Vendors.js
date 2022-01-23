@@ -21,6 +21,7 @@ router.post("/vendorpost", (req, res) => {
         vshop: req.body.vshop,
         vopen: req.body.vopen,
         vclose: req.body.vclose,
+        vpass: req.body.vpass,
     });
 
     newVendor.save()
@@ -31,5 +32,20 @@ router.post("/vendorpost", (req, res) => {
             res.status(400).send(err);
         });
 });
+
+router.post("/login", (req, res)=> {
+    const { email, password} = req.body
+    Vendor.findOne({ vemail: email}, (err, vendor) => {
+        if(vendor){
+            if(password === vendor.vpass ) {
+                res.send({message: "Login Successfull", vendor: vendor})
+            } else {
+                res.send({ message: "Password didn't match"})
+            }
+        } else {
+            res.send({message: "User not registered"})
+        }
+    })
+})
 
 module.exports = router;

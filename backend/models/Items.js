@@ -1,32 +1,33 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const BuyerSchema = new Schema({
-	bname: {
-		type: String,
-		required: true
-	},
-	bemail: {
+const ItemSchema = new Schema({
+	iname: {
 		type: String,
 		required: true,
-		unique: true
+        unique: true
 	},
-	bnum: {
+	iprice: {
+		type: String,
+		required: true,
+	},
+	irating: {
+		type: String,
+		required: true,
+        default: '0'
+	},
+	iveg: {
 		type: String,
 		required: true
 	},
-	bage: {
+	itags: {
 		type: String,
 		required: true
 	},
-	bbatch: {
-		type: String,
-		required: true
-	},
-	bpass: {
+	iaddons: {
 		type: String,
 		required: true
 	}
 });
 
-module.exports = User = mongoose.model("Users", BuyerSchema);
+module.exports = Item = mongoose.model("Items", ItemSchema);

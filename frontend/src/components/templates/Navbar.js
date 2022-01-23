@@ -4,10 +4,16 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+// import { useEffect } from "react";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const navigate = useNavigate();
-
+  // useEffect(() => {
+  //   if(props.logintype === 2)
+  //   {
+  //     navigate("/vendor_dashboard");
+  //   }
+  // })
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

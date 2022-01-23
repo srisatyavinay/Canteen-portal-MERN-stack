@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
+import Swal from 'sweetalert2';
 
 const Register = (props) => {
   const [bname, setbname] = useState("");
@@ -17,6 +18,8 @@ const Register = (props) => {
   const [bnum, setbnum] = useState("");
   const [bage, setbage] = useState("");
   const [bbatch, setbbatch] = useState("");
+  const [bpass, setbpass] = useState("");
+  const [bcpass, setbcpass] = useState("");
   const [vbreg, setvbreg] = useState("");
 
   const [vname, setvname] = useState("");
@@ -26,6 +29,8 @@ const Register = (props) => {
   const [vshop, setvshop] = useState("");
   const [vopen, setvopen] = useState("");
   const [vclose, setvclose] = useState("");
+  const [vpass, setvpass] = useState("");
+  const [vcpass, setvcpass] = useState("");
 
   const onChangevbreg = (event) => {
     setvbreg(event.target.value);
@@ -49,6 +54,14 @@ const Register = (props) => {
 
   const onChangebbatch = (event) => {
     setbbatch(event.target.value);
+  };
+
+  const onChangebpass = (event) => {
+    setbpass(event.target.value);
+  };
+
+  const onChangebcpass = (event) => {
+    setbcpass(event.target.value);
   };
 
   const onChangevname = (event) => {
@@ -75,12 +88,22 @@ const Register = (props) => {
     setvclose(event.target.value);
   };
 
+  const onChangevpass = (event) => {
+    setvpass(event.target.value);
+  };
+
+  const onChangevcpass = (event) => {
+    setvcpass(event.target.value);
+  };
+
   const resetInputs = () => {
     setbname("");
     setbemail("");
     setbnum("");
     setbage("");
     setbbatch("");
+    setbpass("");
+    setbcpass("");
   };
 
   const resetInputs2 = () => {
@@ -90,6 +113,8 @@ const Register = (props) => {
     setvshop("");
     setvopen("");
     setvclose("");
+    setvpass("");
+    setvcpass("");
   };
 
   const onSubmit = (event) => {
@@ -101,14 +126,28 @@ const Register = (props) => {
       bnum: bnum,
       bage: bage,
       bbatch: bbatch,
+      bpass: bpass
     };
 
-    axios
-      .post("http://localhost:4000/user/register", newBuyer)
-      .then((response) => {
-        alert("Created\t" + response.data.bname);
-        console.log(response.data);
+    if (bname && bemail && bnum && bage && bbatch && bpass && (bpass === bcpass) && Number.isInteger(Number(bnum)) && Number.isInteger(Number(bage)) && Number(bage) >= 0 && Number(bnum) >= 0) {
+      axios
+        .post("http://localhost:4000/user/register", newBuyer)
+        .then((response) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Registered successfully',
+            text: "Created " + response.data.bname,
+          });
+          console.log(response.data);
+        });
+    }
+    else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid input',
+        text: 'Enter correct details',
       });
+    }
 
     resetInputs();
   };
@@ -123,14 +162,29 @@ const Register = (props) => {
       vshop: vshop,
       vopen: vopen,
       vclose: vclose,
+      vpass: vpass
     };
 
-    axios
-      .post("http://localhost:4000/vendor/vendorpost", newVendor)
-      .then((response) => {
-        alert("Created\t" + response.data.vname);
-        console.log(response.data);
+    if (vname && vemail && vnum && vshop && vopen && vclose && vpass && (vpass === vcpass) && Number.isInteger(Number(vnum)) && Number(vnum) >= 0) {
+      axios
+        .post("http://localhost:4000/vendor/vendorpost", newVendor)
+        .then((response) => {
+          // Swal.fire("Created " + response.data.vname);
+          Swal.fire({
+            icon: 'success',
+            title: 'Registered successfully',
+            text: "Created " + response.data.vname,
+          });
+          console.log(response.data);
+        });
+    }
+    else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid input',
+        text: 'Enter correct details',
       });
+    }
 
     resetInputs2();
   };
@@ -224,6 +278,26 @@ const Register = (props) => {
             </Box>
           </Grid>
           <Grid item xs={12}>
+            <TextField
+              id="outlined-password-input"
+              label="Password"
+              type="password"
+              value={bpass}
+              onChange={onChangebpass}
+              autoComplete="current-password"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="outlined-password-input-2"
+              label="Confirm password"
+              type="password"
+              value={bcpass}
+              onChange={onChangebcpass}
+              autoComplete="current-password"
+            />
+          </Grid>
+          <Grid item xs={12}>
             <Button variant="contained" onClick={onSubmit}>
               Register
             </Button>
@@ -299,7 +373,7 @@ const Register = (props) => {
             />
           </Grid>
           <Grid item xs={12}>
-          <TextField
+            <TextField
               id="time"
               label="Shop closing time"
               type="time"
@@ -313,6 +387,26 @@ const Register = (props) => {
               sx={{ width: 215 }}
               value={vclose}
               onChange={onChangevclose}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="outlined-password-input"
+              label="Password"
+              type="password"
+              value={vpass}
+              onChange={onChangevpass}
+              autoComplete="current-password"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="outlined-password-input-2"
+              label="Confirm password"
+              type="password"
+              value={vcpass}
+              onChange={onChangevcpass}
+              autoComplete="current-password"
             />
           </Grid>
           <Grid item xs={12}>

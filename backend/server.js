@@ -10,13 +10,14 @@ const DB_NAME = "backend"
 var testAPIRouter = require("./routes/testAPI");
 var UserRouter = require("./routes/Users");
 var VendorRouter = require("./routes/Vendors");
+var ItemRouter = require("./routes/Items");
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connection to MongoDB
-mongoose.connect(`mongodb+srv://abcd:efgh@rest.djgro.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`, { useNewUrlParser: true });
+mongoose.connect(`mongodb+srv://efgh:ijkl@cluster0.qy5vu.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`, { useNewUrlParser: true });
 const connection = mongoose.connection;
 connection.once('open', function() {
     console.log("MongoDB database connection established successfully !");
@@ -26,6 +27,7 @@ connection.once('open', function() {
 app.use("/testAPI", testAPIRouter);
 app.use("/user", UserRouter);
 app.use("/vendor", VendorRouter);
+app.use("/item", ItemRouter);
 
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
