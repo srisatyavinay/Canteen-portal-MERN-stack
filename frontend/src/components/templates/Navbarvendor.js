@@ -27,7 +27,10 @@ const Navbar = (props) => {
           <Button color="inherit" onClick={() => navigate("/vendor_dashboard/orders")}>
             Orders
           </Button>
-          <Button color="inherit" onClick={() => navigate("/vendor_dashboard/profile")}>
+          <Button color="inherit" onClick={() => navigate("/vendor_dashboard/statistics")}>
+            Statistics
+          </Button>
+          <Button color="inherit" onClick={() => navigate("/vendor_dashboard/vendor_profile")}>
             Profile
           </Button>
         </Toolbar>

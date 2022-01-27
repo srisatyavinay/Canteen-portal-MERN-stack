@@ -5,14 +5,14 @@ var router = express.Router();
 const Item = require("../models/Items");
 // GET request 
 // Getting all the users
-router.get("/", function(req, res) {
-    User.find(function(err, users) {
-		if (err) {
-			console.log(err);
-		} else {
-			res.json(users);
-		}
-	})
+router.get("/", function (req, res) {
+    User.find(function (err, items) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json({ items: items });
+        }
+    })
 });
 
 // NOTE: Below functions are just sample to show you API endpoints working, for the assignment you may need to edit them
@@ -26,7 +26,7 @@ router.post("/register", (req, res) => {
         irating: req.body.irating,
         iveg: req.body.iveg,
         itags: req.body.itags,
-        iaddons: req.body.iaddons,
+        ishop: req.body.ishop,
     });
 
     newItem.save()
@@ -37,6 +37,43 @@ router.post("/register", (req, res) => {
             res.status(400).send(err);
         });
 });
+
+router.post("/shop_items", (req, res) => {
+    const shop = req.body.shop
+    Item.find({ ishop: shop }, (err, itemlist) => {
+        res.status(200).send({ itemlist: itemlist })
+    })
+})
+
+router.post("/:ID", (req, res) => {
+    Item.findByIdAndDelete(req.params.ID, (err, item) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json(item);
+        }
+    })
+})
+
+router.post("/edit/:ID", (req, res) => {
+    const newItem = {
+        iname: req.body.iname,
+        iprice: req.body.iprice,
+        irating: req.body.irating,
+        iveg: req.body.iveg,
+        itags: req.body.itags,
+        ishop: req.body.ishop,
+    };
+    Item.findByIdAndUpdate(req.params.ID, newItem, {new: true}, (err, item) => {
+        if(err){
+            res.status(400).send(err);
+        }
+        else{
+            res.status(200).json(item);
+        }
+    })
+})
 
 // POST request 
 // Login

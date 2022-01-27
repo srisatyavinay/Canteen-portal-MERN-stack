@@ -56,10 +56,11 @@ const Login = (props) => {
         .post("http://localhost:4000/user/login", buyer)
         .then((response) => {
           Swal.fire(response.data.message)
-          props.setLoginUser(response.data.user);
+          // props.setLoginUser(response.data.user);
           if(response.data.user)
           {
-            props.setLoginType(1);
+            // props.setLoginType(1);
+            localStorage.setItem('curr_user', response.data.user)
             // navigate("/");
             navigate("/user_dashboard", { replace: true });
           }
@@ -87,11 +88,14 @@ const Login = (props) => {
         .post("http://localhost:4000/vendor/login", vendor)
         .then((response) => {
           Swal.fire(response.data.message);
-          props.setLoginVendor(response.data.vendor);
+          // props.setLoginVendor(response.data.vendor);
+          console.log(response.data.vendor);
           if(response.data.vendor)
           {
-            props.setLoginType(2);
+            // props.setLoginType(2);
             // navigate("/");
+            window.localStorage.setItem('curr_vendor', JSON.stringify(response.data.vendor));
+            // console.log(JSON.parse(window.localStorage.getItem("curr_vendor")));
             navigate("/vendor_dashboard", { replace: true });
           }
         });

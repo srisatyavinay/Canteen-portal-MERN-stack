@@ -360,7 +360,7 @@ const Register = (props) => {
               id="time"
               label="Shop opening time"
               type="time"
-              defaultValue="07:30"
+              // defaultValue="07:30"
               InputLabelProps={{
                 shrink: true,
               }}
@@ -377,7 +377,7 @@ const Register = (props) => {
               id="time"
               label="Shop closing time"
               type="time"
-              defaultValue="07:30"
+              // defaultValue="07:30"
               InputLabelProps={{
                 shrink: true,
               }}

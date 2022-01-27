@@ -5,7 +5,7 @@ const ItemSchema = new Schema({
 	iname: {
 		type: String,
 		required: true,
-        unique: true
+        // unique: true
 	},
 	iprice: {
 		type: String,
@@ -21,10 +21,14 @@ const ItemSchema = new Schema({
 		required: true
 	},
 	itags: {
-		type: String,
+		type: Map,
 		required: true
 	},
-	iaddons: {
+	// iaddons: {
+	// 	type: String,
+	// 	required: true
+	// },
+	ishop: {
 		type: String,
 		required: true
 	}

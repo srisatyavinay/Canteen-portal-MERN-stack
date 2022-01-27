@@ -1,4 +1,5 @@
 var express = require("express");
+const ObjectID = require('mongodb').ObjectID;
 var router = express.Router();
 
 const Vendor = require("../models/Vendors");
@@ -47,5 +48,69 @@ router.post("/login", (req, res)=> {
         }
     })
 })
+
+router.post("/:ID", (req, res) => {
+    const newVendor = {
+        vname: req.body.vname,
+        vemail: req.body.vemail,
+        vnum: req.body.vnum,
+        vshop: req.body.vshop,
+        vopen: req.body.vopen,
+        vclose: req.body.vclose,
+        vpass: req.body.vpass,
+    };
+
+    Vendor.findByIdAndUpdate(req.params.ID, newVendor, {new: true}, (err, vendor) => {
+        if(err){
+            res.status(400).send(err);
+        }
+        else{
+            res.status(200).json(vendor);
+        }
+    })
+});
+
+// router.post("/:postID", async (req, res) => {
+//     const newVendor = new Vendor({
+//         vname: req.body.vname,
+//         vemail: req.body.vemail,
+//         vnum: req.body.vnum,
+//         vshop: req.body.vshop,
+//         vopen: req.body.vopen,
+//         vclose: req.body.vclose,
+//         vpass: req.body.vpass,
+//     });
+//     try {
+//         const updatedPost = await Vendor.findOneAndReplace(
+//             {_id : req.params.postID},
+//             { $set : newVendor}
+//         );
+//         res.status(200).json(updatedPost);
+//     }
+//     catch(err)
+//     {
+//         res.status(400).send(err);
+//     }
+// })
+
+// router.post("/vendoredit", (req, res)=> {
+//     const newVendor = new Vendor({
+//         vname: req.body.vname,
+//         vemail: req.body.vemail,
+//         vnum: req.body.vnum,
+//         vshop: req.body.vshop,
+//         vopen: req.body.vopen,
+//         vclose: req.body.vclose,
+//         vpass: req.body.vpass,
+//     });
+//     // const { email, password} = req.body
+//     Vendor.findOneAndReplace({ vemail: newVendor.vemail}, newVendor, null, (err, vendor) => {
+//         if(err){
+//             res.status(400).send(err);
+//         } else {
+//             res.status(200).json({vendordetails: vendor});
+//         }
+//     })
+// })
 
 module.exports = router;
