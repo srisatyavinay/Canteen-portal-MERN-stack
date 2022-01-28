@@ -6,11 +6,11 @@ const Item = require("../models/Items");
 // GET request 
 // Getting all the users
 router.get("/", function (req, res) {
-    User.find(function (err, items) {
+    Item.find(function (err, items) {
         if (err) {
             console.log(err);
         } else {
-            res.json({ items: items });
+            res.json({ itemlist: items });
         }
     })
 });

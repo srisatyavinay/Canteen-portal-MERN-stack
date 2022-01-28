@@ -13,6 +13,10 @@ import Vdashboard from "./components/vendors/Vdashboard"
 import Orders from "./components/vendors/Orders"
 import Statistics from "./components/vendors/Statistics"
 import EditItem from "./components/vendors/EditItem"
+import Udashboard from "./components/users/Udashboard"
+import Uprofile from "./components/users/Uprofile"
+import Ueditprofile from "./components/users/Ueditprofile"
+import Uorders from "./components/users/Uorders";
 // import { useState } from 'react';
 // import Profile from "./components/users/Profile";
 
@@ -74,7 +78,10 @@ function App() {
           <Route path="orders" element={<Orders/>} />
         </Route>
         <Route path="/user_dashboard" element={<Layout3/>}>
-
+          <Route index element={<Udashboard/>} />
+          <Route path="user_profile" element={<Uprofile/>} />
+          <Route path="edit_user_profile" element={<Ueditprofile/>} />
+          <Route path="my_orders" element={<Uorders/>} />
         </Route>
       </Routes>
     </BrowserRouter>

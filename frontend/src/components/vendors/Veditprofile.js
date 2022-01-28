@@ -4,8 +4,10 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Swal from 'sweetalert2';
+// import { useNavigate } from 'react-router-dom';
 
 const Veditprofile = (props) => {
+	// const navigate = useNavigate();
 	const [vname, setvname] = useState("");
 	const [vemail, setvemail] = useState("");
 	// const [bdate, setDate] = useState(null);
@@ -48,20 +50,20 @@ const Veditprofile = (props) => {
 		setvcpass(event.target.value);
 	};
 
-	// useEffect(() => {
-	// 	const log_ven = JSON.parse(localStorage.getItem('curr_vendor'));
-	// 	const resetInputs2 = () => {
-	// 		setvname(log_ven.vname);
-	// 		setvemail(log_ven.vemail);
-	// 		setvnum(log_ven.vnum);
-	// 		setvshop(log_ven.vshop);
-	// 		setvopen(log_ven.vopen);
-	// 		setvclose(log_ven.vclose);
-	// 		setvpass(log_ven.vpass);
-	// 		setvcpass(log_ven.vpass);
-	// 	};
-	// 	resetInputs2();
-	// }, [])
+	useEffect(() => {
+		const log_ven = JSON.parse(localStorage.getItem('curr_vendor'));
+		const resetInputs2 = () => {
+			setvname(log_ven.vname);
+			setvemail(log_ven.vemail);
+			setvnum(log_ven.vnum);
+			setvshop(log_ven.vshop);
+			setvopen(log_ven.vopen);
+			setvclose(log_ven.vclose);
+			setvpass(log_ven.vpass);
+			setvcpass(log_ven.vpass);
+		};
+		resetInputs2();
+	}, [])
 
 	const log_ven = JSON.parse(localStorage.getItem('curr_vendor'));
 
@@ -76,16 +78,16 @@ const Veditprofile = (props) => {
 	// 	setvcpass(log_ven.vpass);
 	// };
 
-	const resetInputs2 = () => {
-		setvname('');
-		setvemail('');
-		setvnum('');
-		setvshop('');
-		setvopen('');
-		setvclose('');
-		setvpass('');
-		setvcpass('');
-	};
+	// const resetInputs2 = () => {
+	// 	setvname('');
+	// 	setvemail('');
+	// 	setvnum('');
+	// 	setvshop('');
+	// 	setvopen('');
+	// 	setvclose('');
+	// 	setvpass('');
+	// 	setvcpass('');
+	// };
 
 	const onSubmit2 = (event) => {
 		event.preventDefault();
@@ -100,9 +102,9 @@ const Veditprofile = (props) => {
 			vpass: vpass
 		};
 
-		console.log(newVendor)
-		console.log(newVendor)
-		console.log(newVendor)
+		// console.log(newVendor)
+		// console.log(newVendor)
+		// console.log(newVendor)
 
 		if (vname && vemail && vnum && vshop && vopen && vclose && vpass && (vpass === vcpass) && Number.isInteger(Number(vnum)) && Number(vnum) >= 0) {
 			axios
@@ -116,7 +118,7 @@ const Veditprofile = (props) => {
 					});
 					// console.log(response.data.vendordetails);
 					localStorage.setItem('curr_vendor', JSON.stringify(response.data))
-					console.log(localStorage.getItem('curr_vendor'))
+					// console.log(localStorage.getItem('curr_vendor'))
 				});
 		}
 		else {
@@ -127,7 +129,9 @@ const Veditprofile = (props) => {
 			});
 		}
 
-		resetInputs2();
+		// navigate(0)
+		// resetInputs2();
+		// window.location.reload(false);
 	};
 
 	return (

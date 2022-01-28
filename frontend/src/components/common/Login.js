@@ -60,9 +60,10 @@ const Login = (props) => {
           if(response.data.user)
           {
             // props.setLoginType(1);
-            localStorage.setItem('curr_user', response.data.user)
+            localStorage.setItem('curr_user', JSON.stringify(response.data.user))
             // navigate("/");
             navigate("/user_dashboard", { replace: true });
+            // console.log(localStorage.getItem('curr_user'))
           }
         });
     }

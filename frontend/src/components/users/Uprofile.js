@@ -1,4 +1,4 @@
-const Orders = (props) => {
+const Uprofile = (props) => {
     return(
         <>
         abcd
@@ -6,4 +6,4 @@ const Orders = (props) => {
     )
 }
 
-export default Orders;
+export default Uprofile;

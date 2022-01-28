@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-const Navbar = (props) => {
+const Navbarvendor = (props) => {
   const navigate = useNavigate();
 
   return (
@@ -33,10 +33,16 @@ const Navbar = (props) => {
           <Button color="inherit" onClick={() => navigate("/vendor_dashboard/vendor_profile")}>
             Profile
           </Button>
+          <Button color="inherit" onClick={() => {
+            localStorage.setItem('curr_vendor', {})
+            navigate('/')
+          }}>
+            Log out
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
   );
 };
 
-export default Navbar;
+export default Navbarvendor;

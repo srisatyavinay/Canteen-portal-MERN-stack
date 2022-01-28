@@ -13,8 +13,7 @@ const ItemSchema = new Schema({
 	},
 	irating: {
 		type: String,
-		required: true,
-        default: '0'
+		required: true
 	},
 	iveg: {
 		type: String,
