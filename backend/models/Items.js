@@ -33,4 +33,6 @@ const ItemSchema = new Schema({
 	}
 });
 
+//TODO: Add no.of times order placed
+
 module.exports = Item = mongoose.model("Items", ItemSchema);

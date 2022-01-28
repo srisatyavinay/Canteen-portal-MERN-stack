@@ -29,4 +29,6 @@ const BuyerSchema = new Schema({
 	}
 });
 
+//TODO: Add wallet details
+
 module.exports = User = mongoose.model("Users", BuyerSchema);

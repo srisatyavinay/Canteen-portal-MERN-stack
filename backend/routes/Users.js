@@ -70,7 +70,27 @@ router.post("/login", (req, res)=> {
             res.send({message: "User not registered"})
         }
     })
-}) 
+})
+
+router.post("/:ID", (req, res) => {
+    const newUser = {
+        bname: req.body.bname,
+        bemail: req.body.bemail,
+        bnum: req.body.bnum,
+        bage: req.body.bage,
+        bbatch: req.body.bbatch,
+        bpass: req.body.bpass,
+    };
+
+    User.findByIdAndUpdate(req.params.ID, newUser, {new: true}, (err, user) => {
+        if(err){
+            res.status(400).send(err);
+        }
+        else{
+            res.status(200).json(user);
+        }
+    })
+});
 
 module.exports = router;
 

@@ -10,7 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 function tagslist(x) {
     let a = ""
@@ -30,7 +30,7 @@ const Udashboard = (props) => {
 
     // console.log(log_user)
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // console.log(log_ven.vshop)
 
@@ -43,7 +43,7 @@ const Udashboard = (props) => {
             .then((response) => {
                 // Swal.fire("Created " + response.data.vname);
                 setItems(response.data.itemlist)
-                console.log(response.data.itemlist);
+                // console.log(response.data.itemlist);
             });
     }, [])
 
@@ -144,7 +144,8 @@ const Udashboard = (props) => {
                                                         // Swal.fire("Created " + response.data.vname);
                                                         Swal.fire({
                                                             icon: 'success',
-                                                            title: 'Placed order'
+                                                            title: 'Placed order',
+                                                            text: 'You can check status of your order in My orders page'
                                                         })
                                                     });
                                                 }
