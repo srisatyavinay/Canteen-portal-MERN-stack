@@ -9,7 +9,7 @@ const Home = (props) => {
   //   setName("Dass TAs");
   // }, []);
 
-  return <div className="content">Welcome to IIITH Food Portal</div>;
+  return <div className="content">Welcome to IIITH Canteen Portal</div>;
 };
 
 export default Home;

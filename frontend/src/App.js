@@ -92,6 +92,5 @@ function App() {
 //TODO: Add add-ons
 //TODO: Search
 //TODO: Filters
-//TODO: Get confirmation from TA
 
 export default App;

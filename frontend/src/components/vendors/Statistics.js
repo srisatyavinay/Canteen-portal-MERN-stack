@@ -48,7 +48,7 @@ const Statistics = (props) => {
 
 	// const nitems = items
 
-	items.sort(function (a, b) { return b.numtimes - a.numtimes })
+	items.sort(function (a, b) { return b.comnumtimes - a.comnumtimes })
 
 	const nitems = items.slice(0, 5)
 
@@ -95,7 +95,7 @@ const Statistics = (props) => {
 										<TableCell>{item.ishop}</TableCell>
 										<TableCell>{tagslist(item.itags)}</TableCell>
 										<TableCell>{item.iprice}</TableCell>
-										<TableCell>{item.numtimes}</TableCell>
+										<TableCell>{item.comnumtimes}</TableCell>
 									</TableRow>
 								))}
 							</TableBody>
