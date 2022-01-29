@@ -186,6 +186,14 @@ function replace2(item) {
                 });
 
             axios
+                .post(`http://localhost:4000/vendor/vrejected/incr`, { ishop: item.ishop })
+                .then((response) => {
+                    if (response.data.vrejected) {
+                        let l = response.data.vrejected
+                    }
+                });
+
+            axios
                 .post(`http://localhost:4000/order/${item._id}`, post)
                 .then((response) => {
                     // Swal.fire("Created " + response.data.vname);

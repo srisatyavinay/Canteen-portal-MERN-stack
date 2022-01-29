@@ -63,6 +63,10 @@ const VendorSchema = new Schema2({
 	vinacc: {
 		type: Number,
 		required: true
+	},
+	vrejected: {
+		type: Number,
+		required: true
 	}
 });
 

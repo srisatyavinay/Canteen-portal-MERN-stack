@@ -26,7 +26,8 @@ router.post("/vendorpost", (req, res) => {
         vtotalorders: req.body.vtotalorders,
         vactiveorders: req.body.vactiveorders,
         vcompleted: req.body.vcompleted,
-        vinacc: req.body.vinacc
+        vinacc: req.body.vinacc,
+        vrejected: req.body.vrejected
     });
 
     newVendor.save()
@@ -136,6 +137,17 @@ router.post("/vcompleted/incr", (req, res) => {
         }
         else {
             res.status(200).json({vcompleted: vendor.vcompleted});
+        }
+    })
+});
+
+router.post("/vrejected/incr", (req, res) => {
+    Vendor.updateOne({vshop: req.body.ishop}, {$inc: {vrejected: 1}}, (err, vendor) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({vrejected: vendor.vrejected});
         }
     })
 });

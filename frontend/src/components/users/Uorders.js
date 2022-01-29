@@ -38,6 +38,7 @@ function replace(item, value, setValue) {
                 />
                 <>&nbsp; &nbsp;</>
                 <Button color="success" onClick={() => {
+                    console.log({value: value})
                     axios
                         .post(`http://localhost:4000/order/rate/${item._id}`)
                         .then((response) => {
@@ -47,10 +48,12 @@ function replace(item, value, setValue) {
                     axios
                         .post(`http://localhost:4000/item/getratingandcomorders/${item.itemid}`)
                         .then((response) => {
-                            const { prevrating, prevcomnumtimes } = response.data
-                            const newrating = ((value + prevrating * (prevcomnumtimes - 1)) / (prevcomnumtimes))
+                            const prevrating = response.data.irating
+                            const prevcomnumtimes = response.data.comnumtimes
+                            const newrating = ((value + (prevrating * (prevcomnumtimes - 1))) / (prevcomnumtimes))
+                            console.log({newrating: newrating})
                             axios
-                                .post(`http://localhost:4000/item/updaterating/${item.itemid}`, { newrating: newrating })
+                                .post(`http://localhost:4000/item/updaterating/${item.itemid}`, { newrating: Math.round(newrating) })
                                 .then((response) => {
                                     let o = response.data
                                     Swal.fire({
@@ -76,7 +79,7 @@ function replace(item, value, setValue) {
 
 const Uorders = (props) => {
 
-    const [value, setValue] = useState(2.5);
+    const [value, setValue] = useState(0);
 
     // const [quantity, setquantity] = useState(0);
 

@@ -168,7 +168,8 @@ const Register = (props) => {
       vtotalorders: 0,
       vactiveorders: 0,
       vcompleted: 0,
-      vinacc: 0
+      vinacc: 0,
+      vrejected: 0
     };
 
     if (vname && vemail && vnum && vshop && vopen && vclose && vpass && (vpass === vcpass) && ((Number(vopen.slice(0, 2)) < Number(vclose.slice(0, 2))) || ((Number(vopen.slice(0, 2)) === Number(vclose.slice(0, 2))) && (Number(vopen.slice(3, 5)) < Number(vclose.slice(3, 5))))) && validator.isEmail(vemail) && vnum.length === 10 && Number.isInteger(Number(vnum)) && Number(vnum) >= 0) {
