@@ -40,6 +40,7 @@ function replace(item) {
                     .then((response) => {
                         if (response.data.vinacc) {
                             a = response.data.vinacc
+                            console.log(response.data)
                         }
                     });
                 if (a < 10) {
@@ -71,8 +72,7 @@ function replace(item) {
                             })
                         });
                 }
-                else
-                {
+                else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Cannot place order',
@@ -136,6 +136,13 @@ function replace(item) {
                         }
                     });
                 axios
+                    .post(`http://localhost:4000/item/comnumtimes/incr`, { itemid: item.itemid })
+                    .then((response) => {
+                        if (response.data.comnumtimes) {
+                            let n = response.data.comnumtimes
+                        }
+                    });
+                axios
                     .post(`http://localhost:4000/order/${item._id}`, post)
                     .then((response) => {
                         // Swal.fire("Created " + response.data.vname);
@@ -159,6 +166,25 @@ function replace2(item) {
     if (item.status === "PLACED") {
         return (<Button onClick={() => {
             let post = { status: "REJECTED" }
+            // const [money, setmoney] = useState(0);
+            let money = 0;
+            // const log_user = JSON.parse(localStorage.getItem('curr_user'));
+            axios
+                .post(`http://localhost:4000/user/money/${item.userid}`)
+                .then((response) => {
+                    // Swal.fire("Created " + response.data.vname);
+                    money = response.data.money
+                    // console.log(response.data.itemlist);
+                    const y = money + item.iprice * item.quantity
+                    axios
+                        .post(`http://localhost:4000/user/money/update/${item.userid}`, { money: y })
+                        .then((response) => {
+                            if (response.data.money) {
+                                let i = response.data.money
+                            }
+                        })
+                });
+
             axios
                 .post(`http://localhost:4000/order/${item._id}`, post)
                 .then((response) => {

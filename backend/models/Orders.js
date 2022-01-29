@@ -45,6 +45,10 @@ const OrderSchema = new Schema({
     status: {
         type: String,
         required: true
+    },
+    rated: {
+        type: Boolean,
+        requird: true
     }
 })
 

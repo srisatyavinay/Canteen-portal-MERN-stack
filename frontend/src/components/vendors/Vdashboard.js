@@ -79,7 +79,7 @@ const Vdashboard = (props) => {
 							<TableBody>
 								{items.map((item, ind) => (
 									<TableRow key={ind + 1}>
-										<TableCell>{ind}</TableCell>
+										<TableCell>{ind + 1}</TableCell>
 										<TableCell>{item.iname}</TableCell>
 										<TableCell>{item.iveg}</TableCell>
 										<TableCell>{item.irating}</TableCell>

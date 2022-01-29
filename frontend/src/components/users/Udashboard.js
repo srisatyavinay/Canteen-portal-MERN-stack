@@ -10,6 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Swal from 'sweetalert2';
+import TextField from "@mui/material/TextField";
+import Ufavorites from "./Ufavorites";
 // import { useNavigate } from 'react-router-dom';
 
 function tagslist(x) {
@@ -25,6 +27,13 @@ function tagslist(x) {
 const Udashboard = (props) => {
 
     // const [quantity, setquantity] = useState(0);
+
+    const [money, setmoney] = useState(0);
+    const [inputMoney, setInputMoney] = useState("");
+
+    const onChangeinputmoney = (event) => {
+        setInputMoney(event.target.value);
+    };
 
     const log_user = JSON.parse(localStorage.getItem('curr_user'));
 
@@ -47,9 +56,77 @@ const Udashboard = (props) => {
             });
     }, [])
 
+    useEffect(() => {
+        // const log_ven = JSON.parse(localStorage.getItem('curr_user'));
+        const log_user = JSON.parse(localStorage.getItem('curr_user'));
+        axios
+            .post(`http://localhost:4000/user/money/${log_user._id}`)
+            .then((response) => {
+                // Swal.fire("Created " + response.data.vname);
+                setmoney(response.data.money)
+                // console.log(response.data.itemlist);
+            });
+    }, [])
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        if (Number.isInteger(Number(inputMoney)) && Number(inputMoney) > 0) {
+            const x = Number(inputMoney) + money;
+            axios
+                .post(`http://localhost:4000/user/money/update/${log_user._id}`, { money: x })
+                .then((response) => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Added money',
+                        text: "Added " + inputMoney,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload(false);
+                        }
+                    })
+                    // console.log(response.data);
+                })
+        }
+
+        // resetInputs();
+    };
+
+    // const resetInputs = () => {
+    //     setInputMoney(0)
+    // };
+
     return (
         <>
             <Grid container align={"center"} spacing={2}>
+                <Grid item xs={12} md={9} lg={9}>
+                    <h3>Wallet Money:</h3>
+                </Grid>
+                <Grid item xs={12} md={9} lg={9}>
+                    <TextField
+                        label="Wallet money"
+                        variant="outlined"
+                        value={money}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={12} md={9} lg={9}>
+                    <TextField
+                        label="Add Money"
+                        variant="outlined"
+                        value={inputMoney}
+                        onChange={onChangeinputmoney}
+                    />
+                </Grid>
+                <Grid item xs={12} md={9} lg={9}>
+                    <Button variant="contained" onClick={onSubmit}>
+                        Add money
+                    </Button>
+                </Grid>
+                <Grid item xs={12} md={9} lg={9}>
+                    <h3>Available Food Items:</h3>
+                </Grid>
                 <Grid item xs={12} md={9} lg={9}>
                     <Paper>
                         <Table size="small">
@@ -128,10 +205,13 @@ const Udashboard = (props) => {
                                                 })
 
                                                 if (qty) {
+                                                    // var today = new Date();
+                                                    // const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+                                                    const time = new Date();
                                                     const newOrder = {
                                                         userid: log_user._id,
                                                         uname: log_user.bname,
-                                                        ptime: Date.now(),
+                                                        ptime: time,
                                                         itemid: item._id,
                                                         ishop: item.ishop,
                                                         iname: item.iname,
@@ -139,32 +219,54 @@ const Udashboard = (props) => {
                                                         irating: Number(item.irating),
                                                         iveg: item.iveg,
                                                         quantity: qty,
-                                                        status: "PLACED"
+                                                        status: "PLACED",
+                                                        rated: false
                                                     }
-                                                    axios
-                                                        .post(`http://localhost:4000/vendor/vtotalorders/incr`, { ishop: item.ishop })
-                                                        .then((response) => {
-                                                            if (response.data.vtotalorders) {
-                                                                let g = response.data.vtotalorders
-                                                            }
-                                                        });
-                                                    axios
-                                                        .post(`http://localhost:4000/item/numtimes/incr`, { itemid: item._id })
-                                                        .then((response) => {
-                                                            if (response.data.numtimes) {
-                                                                let h = response.data.numtimes
-                                                            }
-                                                        });
-                                                    axios
-                                                        .post(`http://localhost:4000/order/register`, newOrder)
-                                                        .then((response) => {
-                                                            // Swal.fire("Created " + response.data.vname);
-                                                            Swal.fire({
-                                                                icon: 'success',
-                                                                title: 'Placed order',
-                                                                text: 'You can check status of your order in My orders page'
+                                                    if (newOrder.iprice * newOrder.quantity <= money) {
+                                                        axios
+                                                            .post(`http://localhost:4000/vendor/vtotalorders/incr`, { ishop: item.ishop })
+                                                            .then((response) => {
+                                                                if (response.data.vtotalorders) {
+                                                                    let g = response.data.vtotalorders
+                                                                }
+                                                            });
+                                                        axios
+                                                            .post(`http://localhost:4000/item/numtimes/incr`, { itemid: item._id })
+                                                            .then((response) => {
+                                                                if (response.data.numtimes) {
+                                                                    let h = response.data.numtimes
+                                                                }
+                                                            });
+                                                        const y = money - newOrder.iprice * newOrder.quantity;
+                                                        axios
+                                                            .post(`http://localhost:4000/user/money/update/${log_user._id}`, { money: y })
+                                                            .then((response) => {
+                                                                if (response.data.money) {
+                                                                    let i = response.data.money
+                                                                }
                                                             })
-                                                        });
+                                                        axios
+                                                            .post(`http://localhost:4000/order/register`, newOrder)
+                                                            .then((response) => {
+                                                                // Swal.fire("Created " + response.data.vname);
+                                                                Swal.fire({
+                                                                    icon: 'success',
+                                                                    title: 'Placed order',
+                                                                    text: 'You can check status of your order in My orders page'
+                                                                }).then((result) => {
+                                                                    if (result.isConfirmed) {
+                                                                        window.location.reload(false);
+                                                                    }
+                                                                })
+                                                            });
+                                                    }
+                                                    else {
+                                                        Swal.fire({
+                                                            icon: 'error',
+                                                            title: 'Insufficient amount in wallet',
+                                                            text: 'Order not placed. Please add money to your wallet'
+                                                        })
+                                                    }
                                                 }
                                             }}>
                                                 Order
@@ -177,6 +279,11 @@ const Udashboard = (props) => {
                     </Paper>
                 </Grid>
             </Grid>
+            <br/>
+            <br/>
+            <hr/>
+            <br/>
+            <Ufavorites/>
         </>
     )
 }

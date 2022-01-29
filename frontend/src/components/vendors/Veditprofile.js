@@ -138,6 +138,9 @@ const Veditprofile = (props) => {
 		<>
 			<Grid container align={"center"} spacing={2}>
 				<Grid item xs={12}>
+					Edit Vendor Details:
+				</Grid>
+				<Grid item xs={12}>
 					<TextField
 						label="Name"
 						variant="outlined"
@@ -225,7 +228,7 @@ const Veditprofile = (props) => {
 				</Grid>
 				<Grid item xs={12}>
 					<Button variant="contained" onClick={onSubmit2}>
-						Register
+						Change
 					</Button>
 				</Grid>
 			</Grid>

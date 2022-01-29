@@ -27,6 +27,7 @@ router.post("/register", (req, res) => {
         bage: req.body.bage,
         bbatch: req.body.bbatch,
         bpass: req.body.bpass,
+        bwallet: req.body.bwallet
     });
 
     newUser.save()
@@ -92,5 +93,26 @@ router.post("/:ID", (req, res) => {
     })
 });
 
-module.exports = router;
+router.post("/money/:ID", (req, res) => {
+    User.findById(req.params.ID, (err, user) => {
+        if(err){
+            res.status(400).send(err);
+        }
+        else{
+            res.status(200).json({money: user.bwallet});
+        }
+    })
+});
 
+router.post("/money/update/:ID", (req, res) => {
+    User.findByIdAndUpdate(req.params.ID, {bwallet: req.body.money}, {new: true}, (err, user) => {
+        if(err){
+            res.status(400).send(err);
+        }
+        else{
+            res.status(200).json({money: user.bwallet});
+        }
+    })
+});
+
+module.exports = router;

@@ -62,18 +62,18 @@ const Ueditprofile = (props) => {
     };
 
     useEffect(() => {
-		const log_user = JSON.parse(localStorage.getItem('curr_user'));
-		const resetInputs = () => {
-			setbname(log_user.bname);
-			setbemail(log_user.bemail);
-			setbnum(log_user.bnum);
-			setbage(log_user.bage);
-			setbbatch(log_user.bbatch);
-			setbpass(log_user.bpass);
-			setbcpass(log_user.bpass);
-		};
-		resetInputs();
-	}, [])
+        const log_user = JSON.parse(localStorage.getItem('curr_user'));
+        const resetInputs = () => {
+            setbname(log_user.bname);
+            setbemail(log_user.bemail);
+            setbnum(log_user.bnum);
+            setbage(log_user.bage);
+            setbbatch(log_user.bbatch);
+            setbpass(log_user.bpass);
+            setbcpass(log_user.bpass);
+        };
+        resetInputs();
+    }, [])
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -94,7 +94,7 @@ const Ueditprofile = (props) => {
                     Swal.fire({
                         icon: 'success',
                         title: 'Edited successfully',
-						text: "Detais changed",
+                        text: "Detais changed",
                     });
                     localStorage.setItem('curr_user', JSON.stringify(response.data))
                 });
@@ -113,6 +113,9 @@ const Ueditprofile = (props) => {
     return (
         <>
             <Grid container align={"center"} spacing={2}>
+                <Grid item xs={12}>
+                    Edit Buyer Details:
+                </Grid>
                 <Grid item xs={12}>
                     <TextField
                         label="Name"
@@ -193,7 +196,7 @@ const Ueditprofile = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                     <Button variant="contained" onClick={onSubmit}>
-                        Register
+                        Change
                     </Button>
                 </Grid>
             </Grid>

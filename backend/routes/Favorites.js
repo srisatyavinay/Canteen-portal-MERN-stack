@@ -35,10 +35,10 @@ router.post("/register", (req, res) => {
         });
 });
 
-router.post("/user_favorites", (req, res) => {
-    const userid = req.body.userid
-    Fitem.find({ userid: userid }, (err, fitemlist) => {
-        res.status(200).send({ favorites: itemlist })
+router.post("/:ID", (req, res) => {
+    // const userid = req.body.userid
+    Fitem.find({ userid: req.params.ID }, (err, fitemlist) => {
+        res.status(200).send({ favorites: fitemlist })
     })
 })
 

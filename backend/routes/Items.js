@@ -27,7 +27,8 @@ router.post("/register", (req, res) => {
         iveg: req.body.iveg,
         itags: req.body.itags,
         ishop: req.body.ishop,
-        numtimes: req.body.numtimes
+        numtimes: req.body.numtimes,
+        comnumtimes: req.body.comnumtimes
     });
 
     newItem.save()
@@ -76,6 +77,28 @@ router.post("/edit/:ID", (req, res) => {
     })
 })
 
+router.post("/getratingandcomorders/:ID", (req, res) => {
+    Item.findById(req.params.ID, (err, item) => {
+        if(err){
+            res.status(400).send(err);
+        }
+        else{
+            res.status(200).json({irating: item.irating, comnumtimes: item.comnumtimes});
+        }
+    })
+})
+
+router.post("/updaterating/:ID", (req, res) => {
+    Item.findByIdAndUpdate(req.params.ID, {irating: req.body.newrating}, {new: true}, (err, item) => {
+        if(err){
+            res.status(400).send(err);
+        }
+        else{
+            res.status(200).json(item);
+        }
+    })
+})
+
 router.post("/numtimes/incr", (req, res) => {
     Item.updateOne({_id: req.body.itemid}, {$inc: {numtimes: 1}}, (err, item) => {
         if (err) {
@@ -83,6 +106,17 @@ router.post("/numtimes/incr", (req, res) => {
         }
         else {
             res.status(200).json({numtimes: item.numtimes});
+        }
+    })
+});
+
+router.post("/comnumtimes/incr", (req, res) => {
+    Item.updateOne({_id: req.body.itemid}, {$inc: {comnumtimes: 1}}, (err, item) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({comnumtimes: item.comnumtimes});
         }
     })
 });

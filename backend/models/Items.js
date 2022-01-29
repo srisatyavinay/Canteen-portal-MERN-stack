@@ -34,6 +34,10 @@ const ItemSchema = new Schema({
 	numtimes: {
 		type: Number,
 		required: true
+	},
+	comnumtimes: {
+		type: Number,
+		required: true
 	}
 });
 

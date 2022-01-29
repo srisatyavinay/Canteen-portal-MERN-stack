@@ -33,9 +33,6 @@ const Navbar = (props) => {
           <Button color="inherit" onClick={() => navigate("/register")}>
             Register
           </Button>
-          <Button color="inherit" onClick={() => navigate("/profile")}>
-            My Profile
-          </Button>
         </Toolbar>
       </AppBar>
     </Box>

@@ -82,7 +82,8 @@ const NewItem = (props) => {
 			itags: itags,
 			// iaddons: iaddons
 			ishop: log_ven.vshop,
-			numtimes: 0
+			numtimes: 0,
+			comnumtimes: 0
 		};
 
 		if (iname && iprice && iveg && Number.isInteger(Number(iprice)) && Number(iprice) > 0) {

@@ -26,7 +26,8 @@ router.post("/register", (req, res) => {
         ishop: req.body.ishop,
         iveg: req.body.iveg,
         quantity: req.body.quantity,
-        status: req.body.status
+        status: req.body.status,
+        rated: req.body.rated
     });
 
     newOrder.save()
@@ -55,6 +56,21 @@ router.post("/vendor_orders", (req, res) => {
 router.post("/:ID", (req, res) => {
     const update = {
         status: req.body.status
+    };
+
+    Order.findByIdAndUpdate(req.params.ID, update, {new: true}, (err, user) => {
+        if(err){
+            res.status(400).send(err);
+        }
+        else{
+            res.status(200).json(user);
+        }
+    })
+})
+
+router.post("/rate/:ID", (req, res) => {
+    const update = {
+        rated: true
     };
 
     Order.findByIdAndUpdate(req.params.ID, update, {new: true}, (err, user) => {

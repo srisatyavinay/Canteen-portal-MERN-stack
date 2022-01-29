@@ -133,6 +133,9 @@ const EditItem = (props) => {
 		<>
 			<Grid container align={"center"} spacing={2}>
 				<Grid item xs={12}>
+					Edit Item Details:
+				</Grid>
+				<Grid item xs={12}>
 					<TextField
 						label="Item Name"
 						variant="outlined"
@@ -149,7 +152,7 @@ const EditItem = (props) => {
 					/>
 				</Grid>
 				<Grid item xs={12}>
-				<Typography component="legend">rating</Typography>
+					<Typography component="legend">rating</Typography>
 					<Rating name="read-only" value={irating} readOnly />
 				</Grid>
 				<Grid item xs={12}>
@@ -200,7 +203,7 @@ const EditItem = (props) => {
 				</Grid>
 				<Grid item xs={12}>
 					<Button variant="contained" onClick={onSubmit2}>
-						Register
+						Change
 					</Button>
 				</Grid>
 			</Grid>

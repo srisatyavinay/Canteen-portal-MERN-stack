@@ -9,7 +9,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-// import Swal from 'sweetalert2';
+import Rating from '@mui/material/Rating';
+import { Button } from "@mui/material";
+import Swal from 'sweetalert2';
 // import { useNavigate } from 'react-router-dom';
 
 // function tagslist(x) {
@@ -22,7 +24,59 @@ import TableBody from "@mui/material/TableBody";
 //     return a
 // }
 
+function replace(item, value, setValue) {
+    if (item.status === "COMPLETED" && item.rated === false) {
+        return (
+            <>
+                <Rating
+                    name="simple-controlled"
+                    value={value}
+                    // defaultValue={2}
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}
+                />
+                <>&nbsp; &nbsp;</>
+                <Button color="success" onClick={() => {
+                    axios
+                        .post(`http://localhost:4000/order/rate/${item._id}`)
+                        .then((response) => {
+                            // Swal.fire("Created " + response.data.vname);
+                            let m = response.data
+                        });
+                    axios
+                        .post(`http://localhost:4000/item/getratingandcomorders/${item.itemid}`)
+                        .then((response) => {
+                            const { prevrating, prevcomnumtimes } = response.data
+                            const newrating = ((value + prevrating * (prevcomnumtimes - 1)) / (prevcomnumtimes))
+                            axios
+                                .post(`http://localhost:4000/item/updaterating/${item.itemid}`, { newrating: newrating })
+                                .then((response) => {
+                                    let o = response.data
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Rating submitted'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.reload(false);
+                                        }
+                                    })
+                                })
+                        })
+                }}>
+                    Submit
+                </Button>
+            </>
+        )
+    }
+    else {
+        return ""
+    }
+}
+
 const Uorders = (props) => {
+
+    const [value, setValue] = useState(2.5);
 
     // const [quantity, setquantity] = useState(0);
 
@@ -40,7 +94,7 @@ const Uorders = (props) => {
         // const log_ven = JSON.parse(localStorage.getItem('curr_user'));
         const log_user = JSON.parse(localStorage.getItem('curr_user'));
         axios
-            .post("http://localhost:4000/order/user_orders/", {userid: log_user._id})
+            .post("http://localhost:4000/order/user_orders/", { userid: log_user._id })
             .then((response) => {
                 // Swal.fire("Created " + response.data.vname);
                 setOrders(response.data.orderlist)
@@ -72,6 +126,7 @@ const Uorders = (props) => {
                                     <TableCell>Placed time</TableCell>
                                     <TableCell>Status</TableCell>
                                     {/* <TableCell>Place order</TableCell> */}
+                                    <TableCell>Rate</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -86,6 +141,7 @@ const Uorders = (props) => {
                                         <TableCell>{item.quantity * item.iprice}</TableCell>
                                         <TableCell>{item.ptime}</TableCell>
                                         <TableCell>{item.status}</TableCell>
+                                        <TableCell>{replace(item, value, setValue)}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import Swal from 'sweetalert2';
+import validator from 'validator'
 
 const Register = (props) => {
   const [bname, setbname] = useState("");
@@ -130,9 +131,7 @@ const Register = (props) => {
       bwallet: 40
     };
 
-    //TODO: Validate emails, phone nos
-
-    if (bname && bemail && bnum && bage && bbatch && bpass && (bpass === bcpass) && Number.isInteger(Number(bnum)) && Number.isInteger(Number(bage)) && Number(bage) >= 0 && Number(bnum) >= 0) {
+    if (bname && bemail && bnum && bage && bbatch && bpass && (bpass === bcpass) && validator.isEmail(bemail) && bnum.length === 10 && Number.isInteger(Number(bnum)) && Number.isInteger(Number(bage)) && Number(bage) >= 0 && Number(bnum) >= 0) {
       axios
         .post("http://localhost:4000/user/register", newBuyer)
         .then((response) => {
@@ -172,7 +171,7 @@ const Register = (props) => {
       vinacc: 0
     };
 
-    if (vname && vemail && vnum && vshop && vopen && vclose && vpass && (vpass === vcpass) && Number.isInteger(Number(vnum)) && Number(vnum) >= 0) {
+    if (vname && vemail && vnum && vshop && vopen && vclose && vpass && (vpass === vcpass) && ((Number(vopen.slice(0, 2)) < Number(vclose.slice(0, 2))) || ((Number(vopen.slice(0, 2)) === Number(vclose.slice(0, 2))) && (Number(vopen.slice(3, 5)) < Number(vclose.slice(3, 5))))) && validator.isEmail(vemail) && vnum.length === 10 && Number.isInteger(Number(vnum)) && Number(vnum) >= 0) {
       axios
         .post("http://localhost:4000/vendor/vendorpost", newVendor)
         .then((response) => {

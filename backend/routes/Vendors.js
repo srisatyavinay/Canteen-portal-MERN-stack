@@ -75,7 +75,7 @@ router.post("/:ID", (req, res) => {
 });
 
 router.post("/vinacc/get", (req, res) => {
-    Vendor.findOne({ishop: req.body.ishop}, (err, vendor) => {
+    Vendor.findOne({vshop: req.body.ishop}, (err, vendor) => {
         if (err) {
             res.status(400).send(err);
         }
@@ -86,7 +86,7 @@ router.post("/vinacc/get", (req, res) => {
 });
 
 router.post("/vinacc/incr", (req, res) => {
-    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vinacc: 1}}, (err, vendor) => {
+    Vendor.updateOne({vshop: req.body.ishop}, {$inc: {vinacc: 1}}, (err, vendor) => {
         if (err) {
             res.status(400).send(err);
         }
@@ -96,8 +96,8 @@ router.post("/vinacc/incr", (req, res) => {
     })
 });
 
-router.post("/vinacc/incr", (req, res) => {
-    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vinacc: -1}}, (err, vendor) => {
+router.post("/vinacc/decr", (req, res) => {
+    Vendor.updateOne({vshop: req.body.ishop}, {$inc: {vinacc: -1}}, (err, vendor) => {
         if (err) {
             res.status(400).send(err);
         }
@@ -108,7 +108,7 @@ router.post("/vinacc/incr", (req, res) => {
 });
 
 router.post("/vactiveorders/incr", (req, res) => {
-    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vactiveorders: 1}}, (err, vendor) => {
+    Vendor.updateOne({vshop: req.body.ishop}, {$inc: {vactiveorders: 1}}, (err, vendor) => {
         if (err) {
             res.status(400).send(err);
         }
@@ -119,7 +119,7 @@ router.post("/vactiveorders/incr", (req, res) => {
 });
 
 router.post("/vactiveorders/decr", (req, res) => {
-    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vactiveorders: -1}}, (err, vendor) => {
+    Vendor.updateOne({vshop: req.body.ishop}, {$inc: {vactiveorders: -1}}, (err, vendor) => {
         if (err) {
             res.status(400).send(err);
         }
@@ -130,7 +130,7 @@ router.post("/vactiveorders/decr", (req, res) => {
 });
 
 router.post("/vcompleted/incr", (req, res) => {
-    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vcompleted: 1}}, (err, vendor) => {
+    Vendor.updateOne({vshop: req.body.ishop}, {$inc: {vcompleted: 1}}, (err, vendor) => {
         if (err) {
             res.status(400).send(err);
         }
@@ -141,7 +141,7 @@ router.post("/vcompleted/incr", (req, res) => {
 });
 
 router.post("/vtotalorders/incr", (req, res) => {
-    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vtotalorders: 1}}, (err, vendor) => {
+    Vendor.updateOne({vshop: req.body.ishop}, {$inc: {vtotalorders: 1}}, (err, vendor) => {
         if (err) {
             res.status(400).send(err);
         }

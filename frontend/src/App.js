@@ -88,4 +88,12 @@ function App() {
   );
 }
 
+//TODO: Implement statistics page
+//TODO: rating after order is placed
+//TODO: add no.of completed orders in item schema to calculate rating
+//TODO: Add post request after completing order to increment completed numtimes in item schema
+//TODO: Disable if shop is not open
+//TODO: Add add-ons
+//TODO: Search, filters
+
 export default App;

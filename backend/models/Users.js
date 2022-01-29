@@ -33,8 +33,4 @@ const BuyerSchema = new Schema({
 	}
 });
 
-//TODO: Add wallet details
-//TODO: Change price, age into strings.
-
-
 module.exports = User = mongoose.model("Users", BuyerSchema);

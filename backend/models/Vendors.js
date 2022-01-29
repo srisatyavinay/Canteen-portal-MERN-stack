@@ -66,6 +66,4 @@ const VendorSchema = new Schema2({
 	}
 });
 
-//TODO: Change some of them to strings
-
 module.exports = Vendor = mongoose.model("Vendors", VendorSchema);
