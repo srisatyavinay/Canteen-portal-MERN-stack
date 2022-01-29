@@ -124,10 +124,13 @@ const Register = (props) => {
       bname: bname,
       bemail: bemail,
       bnum: bnum,
-      bage: bage,
+      bage: Number(bage),
       bbatch: bbatch,
-      bpass: bpass
+      bpass: bpass,
+      bwallet: 40
     };
+
+    //TODO: Validate emails, phone nos
 
     if (bname && bemail && bnum && bage && bbatch && bpass && (bpass === bcpass) && Number.isInteger(Number(bnum)) && Number.isInteger(Number(bage)) && Number(bage) >= 0 && Number(bnum) >= 0) {
       axios
@@ -162,7 +165,11 @@ const Register = (props) => {
       vshop: vshop,
       vopen: vopen,
       vclose: vclose,
-      vpass: vpass
+      vpass: vpass,
+      vtotalorders: 0,
+      vactiveorders: 0,
+      vcompleted: 0,
+      vinacc: 0
     };
 
     if (vname && vemail && vnum && vshop && vopen && vclose && vpass && (vpass === vcpass) && Number.isInteger(Number(vnum)) && Number(vnum) >= 0) {

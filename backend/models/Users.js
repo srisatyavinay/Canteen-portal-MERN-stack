@@ -16,7 +16,7 @@ const BuyerSchema = new Schema({
 		required: true
 	},
 	bage: {
-		type: String,
+		type: Number,
 		required: true
 	},
 	bbatch: {
@@ -26,9 +26,15 @@ const BuyerSchema = new Schema({
 	bpass: {
 		type: String,
 		required: true
+	},
+	bwallet: {
+		type: Number,
+		required: true
 	}
 });
 
 //TODO: Add wallet details
+//TODO: Change price, age into strings.
+
 
 module.exports = User = mongoose.model("Users", BuyerSchema);

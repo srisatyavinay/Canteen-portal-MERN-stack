@@ -76,12 +76,13 @@ const NewItem = (props) => {
 
 		const newItem = {
 			iname: iname,
-			iprice: iprice,
-			irating: irating,
+			iprice: Number(iprice),
+			irating: Number(irating),
 			iveg: iveg,
 			itags: itags,
 			// iaddons: iaddons
-			ishop: log_ven.vshop
+			ishop: log_ven.vshop,
+			numtimes: 0
 		};
 
 		if (iname && iprice && iveg && Number.isInteger(Number(iprice)) && Number(iprice) > 0) {

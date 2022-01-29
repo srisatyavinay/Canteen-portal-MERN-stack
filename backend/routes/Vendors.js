@@ -4,14 +4,14 @@ var router = express.Router();
 
 const Vendor = require("../models/Vendors");
 
-router.get("/", function(req, res) {
-    Vendor.find(function(err, vendors) {
-		if (err) {
-			console.log(err);
-		} else {
-			res.json(vendors);
-		}
-	})
+router.get("/", function (req, res) {
+    Vendor.find(function (err, vendors) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(vendors);
+        }
+    })
 });
 
 router.post("/vendorpost", (req, res) => {
@@ -23,6 +23,10 @@ router.post("/vendorpost", (req, res) => {
         vopen: req.body.vopen,
         vclose: req.body.vclose,
         vpass: req.body.vpass,
+        vtotalorders: req.body.vtotalorders,
+        vactiveorders: req.body.vactiveorders,
+        vcompleted: req.body.vcompleted,
+        vinacc: req.body.vinacc
     });
 
     newVendor.save()
@@ -34,17 +38,17 @@ router.post("/vendorpost", (req, res) => {
         });
 });
 
-router.post("/login", (req, res)=> {
-    const { email, password} = req.body
-    Vendor.findOne({ vemail: email}, (err, vendor) => {
-        if(vendor){
-            if(password === vendor.vpass ) {
-                res.send({message: "Login Successfull", vendor: vendor})
+router.post("/login", (req, res) => {
+    const { email, password } = req.body
+    Vendor.findOne({ vemail: email }, (err, vendor) => {
+        if (vendor) {
+            if (password === vendor.vpass) {
+                res.send({ message: "Login Successfull", vendor: vendor })
             } else {
-                res.send({ message: "Password didn't match"})
+                res.send({ message: "Password didn't match" })
             }
         } else {
-            res.send({message: "User not registered"})
+            res.send({ message: "User not registered" })
         }
     })
 })
@@ -60,12 +64,89 @@ router.post("/:ID", (req, res) => {
         vpass: req.body.vpass,
     };
 
-    Vendor.findByIdAndUpdate(req.params.ID, newVendor, {new: true}, (err, vendor) => {
-        if(err){
+    Vendor.findByIdAndUpdate(req.params.ID, newVendor, { new: true }, (err, vendor) => {
+        if (err) {
             res.status(400).send(err);
         }
-        else{
+        else {
             res.status(200).json(vendor);
+        }
+    })
+});
+
+router.post("/vinacc/get", (req, res) => {
+    Vendor.findOne({ishop: req.body.ishop}, (err, vendor) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({vinacc: vendor.vinacc});
+        }
+    })
+});
+
+router.post("/vinacc/incr", (req, res) => {
+    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vinacc: 1}}, (err, vendor) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({vinacc: vendor.vinacc});
+        }
+    })
+});
+
+router.post("/vinacc/incr", (req, res) => {
+    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vinacc: -1}}, (err, vendor) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({vinacc: vendor.vinacc});
+        }
+    })
+});
+
+router.post("/vactiveorders/incr", (req, res) => {
+    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vactiveorders: 1}}, (err, vendor) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({vactiveorders: vendor.vactiveorders});
+        }
+    })
+});
+
+router.post("/vactiveorders/decr", (req, res) => {
+    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vactiveorders: -1}}, (err, vendor) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({vactiveorders: vendor.vactiveorders});
+        }
+    })
+});
+
+router.post("/vcompleted/incr", (req, res) => {
+    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vcompleted: 1}}, (err, vendor) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({vcompleted: vendor.vcompleted});
+        }
+    })
+});
+
+router.post("/vtotalorders/incr", (req, res) => {
+    Vendor.updateOne({ishop: req.body.ishop}, {$inc: {vtotalorders: 1}}, (err, vendor) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({vtotalorders: vendor.vtotalorders});
         }
     })
 });

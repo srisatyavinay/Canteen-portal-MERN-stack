@@ -109,7 +109,7 @@ const Udashboard = (props) => {
                                             }}>
                                                 Favorite
                                             </Button>
-                                        </TableCell>                                
+                                        </TableCell>
                                         <TableCell>
                                             <Button color="success" onClick={async () => {
                                                 const { value: qty } = await Swal.fire({
@@ -130,24 +130,41 @@ const Udashboard = (props) => {
                                                 if (qty) {
                                                     const newOrder = {
                                                         userid: log_user._id,
+                                                        uname: log_user.bname,
+                                                        ptime: Date.now(),
                                                         itemid: item._id,
                                                         ishop: item.ishop,
                                                         iname: item.iname,
                                                         iprice: Number(item.iprice),
                                                         irating: Number(item.irating),
+                                                        iveg: item.iveg,
                                                         quantity: qty,
                                                         status: "PLACED"
                                                     }
                                                     axios
-                                                    .post(`http://localhost:4000/order/register`, newOrder)
-                                                    .then((response) => {
-                                                        // Swal.fire("Created " + response.data.vname);
-                                                        Swal.fire({
-                                                            icon: 'success',
-                                                            title: 'Placed order',
-                                                            text: 'You can check status of your order in My orders page'
-                                                        })
-                                                    });
+                                                        .post(`http://localhost:4000/vendor/vtotalorders/incr`, { ishop: item.ishop })
+                                                        .then((response) => {
+                                                            if (response.data.vtotalorders) {
+                                                                let g = response.data.vtotalorders
+                                                            }
+                                                        });
+                                                    axios
+                                                        .post(`http://localhost:4000/item/numtimes/incr`, { itemid: item._id })
+                                                        .then((response) => {
+                                                            if (response.data.numtimes) {
+                                                                let h = response.data.numtimes
+                                                            }
+                                                        });
+                                                    axios
+                                                        .post(`http://localhost:4000/order/register`, newOrder)
+                                                        .then((response) => {
+                                                            // Swal.fire("Created " + response.data.vname);
+                                                            Swal.fire({
+                                                                icon: 'success',
+                                                                title: 'Placed order',
+                                                                text: 'You can check status of your order in My orders page'
+                                                            })
+                                                        });
                                                 }
                                             }}>
                                                 Order

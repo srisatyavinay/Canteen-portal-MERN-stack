@@ -27,6 +27,7 @@ router.post("/register", (req, res) => {
         iveg: req.body.iveg,
         itags: req.body.itags,
         ishop: req.body.ishop,
+        numtimes: req.body.numtimes
     });
 
     newItem.save()
@@ -75,6 +76,17 @@ router.post("/edit/:ID", (req, res) => {
     })
 })
 
+router.post("/numtimes/incr", (req, res) => {
+    Item.updateOne({_id: req.body.itemid}, {$inc: {numtimes: 1}}, (err, item) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({numtimes: item.numtimes});
+        }
+    })
+});
+
 // POST request 
 // Login
 // router.post("/login", (req, res) => {
@@ -110,4 +122,3 @@ router.post("/edit/:ID", (req, res) => {
 // }) 
 
 module.exports = router;
-

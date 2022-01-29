@@ -48,6 +48,24 @@ const VendorSchema = new Schema2({
 		type: String,
         required: true
 	},
+	vtotalorders: {
+		type: Number,
+		required: true
+	},
+	vactiveorders: {
+		type: Number,
+		required: true
+	},
+	vcompleted: {
+		type: Number,
+		required: true
+	},
+	vinacc: {
+		type: Number,
+		required: true
+	}
 });
+
+//TODO: Change some of them to strings
 
 module.exports = Vendor = mongoose.model("Vendors", VendorSchema);

@@ -8,11 +8,11 @@ const ItemSchema = new Schema({
         // unique: true
 	},
 	iprice: {
-		type: String,
+		type: Number,
 		required: true,
 	},
 	irating: {
-		type: String,
+		type: Number,
 		required: true
 	},
 	iveg: {
@@ -30,9 +30,11 @@ const ItemSchema = new Schema({
 	ishop: {
 		type: String,
 		required: true
+	},
+	numtimes: {
+		type: Number,
+		required: true
 	}
 });
-
-//TODO: Add no.of times order placed
 
 module.exports = Item = mongoose.model("Items", ItemSchema);

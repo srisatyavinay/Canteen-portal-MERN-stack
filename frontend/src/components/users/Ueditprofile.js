@@ -82,7 +82,7 @@ const Ueditprofile = (props) => {
             bname: bname,
             bemail: bemail,
             bnum: bnum,
-            bage: bage,
+            bage: Number(bage),
             bbatch: bbatch,
             bpass: bpass
         };

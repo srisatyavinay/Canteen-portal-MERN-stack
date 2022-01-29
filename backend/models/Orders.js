@@ -6,6 +6,14 @@ const OrderSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
+    uname: {
+        type: String,
+        required: true
+    },
+    ptime: {
+        type: Date,
+        required: true
+    },
     itemid: {
         type: Schema.Types.ObjectId,
         required: true
@@ -20,6 +28,10 @@ const OrderSchema = new Schema({
     },
     iprice: {
         type: Number,
+        required: true
+    },
+    iveg: {
+        type: String,
         required: true
     },
     irating: {

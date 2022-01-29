@@ -91,8 +91,8 @@ const EditItem = (props) => {
 
 		const newItem = {
 			iname: iname,
-			iprice: iprice,
-			irating: irating,
+			iprice: Number(iprice),
+			irating: Number(irating),
 			iveg: iveg,
 			itags: itags,
 			// iaddons: iaddons
@@ -149,7 +149,7 @@ const EditItem = (props) => {
 					/>
 				</Grid>
 				<Grid item xs={12}>
-				<Typography component="legend">Initial rating (0)</Typography>
+				<Typography component="legend">rating</Typography>
 					<Rating name="read-only" value={irating} readOnly />
 				</Grid>
 				<Grid item xs={12}>
