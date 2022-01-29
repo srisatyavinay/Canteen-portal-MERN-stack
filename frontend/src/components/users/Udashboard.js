@@ -12,6 +12,8 @@ import TableBody from "@mui/material/TableBody";
 import Swal from 'sweetalert2';
 import TextField from "@mui/material/TextField";
 import Ufavorites from "./Ufavorites";
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
 // import { useNavigate } from 'react-router-dom';
 
 function tagslist(x) {
@@ -24,12 +26,121 @@ function tagslist(x) {
     return a
 }
 
+// function replace(item, log_user, shopoc, setshopoc, money, setmoney) {
+//     axios
+//         .post("http://localhost:4000/vendor/getvopenvclose", { ishop: item.ishop })
+//         .then((response) => {
+//             setshopoc({ vopen: response.data.vopen, vclose: response.data.vclose })
+//         });
+
+//     const x = new Date();
+//     const hrs = Number(x.getHours());
+//     const mins = Number(x.getMinutes());
+
+//     if ((hrs < Number(String(shopoc.vclose).slice(0, 2)) && hrs > Number(String(shopoc.vopen).slice(0, 2))) || (hrs === Number(String(shopoc.vopen).slice(0, 2)) && mins >= Number(String(shopoc.vopen).slice(3, 5))) || (hrs === Number(String(shopoc.vclose).slice(0, 2)) && mins < Number(String(shopoc.vclose).slice(3, 5)))) {
+//         return (<Button variant="contained" color="success" onClick={async () => {
+//             const { value: qty } = await Swal.fire({
+//                 input: 'text',
+//                 inputLabel: 'Enter Quantity',
+//                 inputPlaceholder: 'Type the quantity here ...',
+//                 inputAttributes: {
+//                     'aria-label': 'Type the quantity here'
+//                 },
+//                 showCancelButton: true,
+//                 inputValidator: (value) => {
+//                     if (!Number(value) || Number(value) <= 0) {
+//                         return 'Enter a valid number'
+//                     }
+//                 }
+//             })
+
+//             if (qty) {
+//                 // var today = new Date();
+//                 // const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+//                 const time = new Date();
+//                 const newOrder = {
+//                     userid: log_user._id,
+//                     uname: log_user.bname,
+//                     ptime: time,
+//                     itemid: item._id,
+//                     ishop: item.ishop,
+//                     iname: item.iname,
+//                     iprice: Number(item.iprice),
+//                     irating: Number(item.irating),
+//                     iveg: item.iveg,
+//                     quantity: qty,
+//                     status: "PLACED",
+//                     rated: false
+//                 }
+//                 if (newOrder.iprice * newOrder.quantity <= money) {
+//                     axios
+//                         .post(`http://localhost:4000/vendor/vtotalorders/incr`, { ishop: item.ishop })
+//                         .then((response) => {
+//                             if (response.data.vtotalorders) {
+//                                 let g = response.data.vtotalorders
+//                             }
+//                         });
+//                     axios
+//                         .post(`http://localhost:4000/item/numtimes/incr`, { itemid: item._id })
+//                         .then((response) => {
+//                             if (response.data.numtimes) {
+//                                 let h = response.data.numtimes
+//                             }
+//                         });
+//                     const y = money - newOrder.iprice * newOrder.quantity;
+//                     axios
+//                         .post(`http://localhost:4000/user/money/update/${log_user._id}`, { money: y })
+//                         .then((response) => {
+//                             if (response.data.money) {
+//                                 let i = response.data.money
+//                             }
+//                         })
+//                     axios
+//                         .post(`http://localhost:4000/order/register`, newOrder)
+//                         .then((response) => {
+//                             // Swal.fire("Created " + response.data.vname);
+//                             Swal.fire({
+//                                 icon: 'success',
+//                                 title: 'Placed order',
+//                                 text: 'You can check status of your order in My orders page'
+//                             }).then((result) => {
+//                                 if (result.isConfirmed) {
+//                                     window.location.reload(false);
+//                                 }
+//                             })
+//                         });
+//                 }
+//                 else {
+//                     Swal.fire({
+//                         icon: 'error',
+//                         title: 'Insufficient amount in wallet',
+//                         text: 'Order not placed. Please add money to your wallet'
+//                     })
+//                 }
+//             }
+//         }}>
+//             Order
+//         </Button>)
+//     }
+//     else {
+//         return (
+//             <Button disabled variant="contained" color="success">Order</Button>
+//         )
+//     }
+
+// }
+
 const Udashboard = (props) => {
 
     // const [quantity, setquantity] = useState(0);
 
     const [money, setmoney] = useState(0);
     const [inputMoney, setInputMoney] = useState("");
+    const [searchText, setSearchText] = useState("");
+
+    const onChangeSearchText = (event) => {
+        setSearchText(event.target.value);
+    };
 
     const onChangeinputmoney = (event) => {
         setInputMoney(event.target.value);
@@ -44,6 +155,9 @@ const Udashboard = (props) => {
     // console.log(log_ven.vshop)
 
     const [items, setItems] = useState([])
+
+    const [shopoc, setshopoc] = useState({})
+
 
     useEffect(() => {
         // const log_ven = JSON.parse(localStorage.getItem('curr_user'));
@@ -124,8 +238,18 @@ const Udashboard = (props) => {
                         Add money
                     </Button>
                 </Grid>
+            </Grid>
+            <br />
+            <br />
+            <hr />
+            <Grid container align={"center"} spacing={2}>
                 <Grid item xs={12} md={9} lg={9}>
                     <h3>Available Food Items:</h3>
+                </Grid>
+                <Grid item xs={12} md={9} lg={9}>
+                    <TextField id="outlined-search" placeholder="Search" sx={{ width: 500 }} label="Search field" value={searchText} onChange={onChangeSearchText} type="search" InputProps={{
+                        startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
+                    }} />
                 </Grid>
                 <Grid item xs={12} md={9} lg={9}>
                     <Paper>
@@ -150,7 +274,14 @@ const Udashboard = (props) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {items.map((item, ind) => (
+                                {items.filter((val) => {
+                                    if (searchText === "") {
+                                        return val
+                                    }
+                                    else if (val.iname.toLowerCase().includes(searchText.toLowerCase())) {
+                                        return val
+                                    }
+                                }).map((item, ind) => (
                                     <TableRow key={ind}>
                                         <TableCell>{ind + 1}</TableCell>
                                         <TableCell>{item.iname}</TableCell>
@@ -160,7 +291,7 @@ const Udashboard = (props) => {
                                         <TableCell>{tagslist(item.itags)}</TableCell>
                                         <TableCell>{item.iprice}</TableCell>
                                         <TableCell>
-                                            <Button onClick={() => {
+                                            <Button variant="contained" onClick={() => {
                                                 const favoritepost = {
                                                     userid: log_user._id,
                                                     iname: item.iname,
@@ -188,7 +319,8 @@ const Udashboard = (props) => {
                                             </Button>
                                         </TableCell>
                                         <TableCell>
-                                            <Button color="success" onClick={async () => {
+                                            {/* {replace(item, log_user, shopoc, setshopoc, money, setmoney)} */}
+                                            <Button variant="contained" color="success" onClick={async () => {
                                                 const { value: qty } = await Swal.fire({
                                                     input: 'text',
                                                     inputLabel: 'Enter Quantity',
@@ -207,11 +339,11 @@ const Udashboard = (props) => {
                                                 if (qty) {
                                                     // var today = new Date();
                                                     // const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-                                                    const time = new Date();
+                                                    // const time = Date.now();
                                                     const newOrder = {
                                                         userid: log_user._id,
                                                         uname: log_user.bname,
-                                                        ptime: time,
+                                                        ptime: Date.now(),
                                                         itemid: item._id,
                                                         ishop: item.ishop,
                                                         iname: item.iname,
@@ -279,11 +411,11 @@ const Udashboard = (props) => {
                     </Paper>
                 </Grid>
             </Grid>
-            <br/>
-            <br/>
-            <hr/>
-            <br/>
-            <Ufavorites/>
+            <br />
+            <br />
+            <hr />
+            <br />
+            <Ufavorites />
         </>
     )
 }

@@ -88,9 +88,4 @@ function App() {
   );
 }
 
-//TODO: Disable if shop is not open
-//TODO: Add add-ons
-//TODO: Search
-//TODO: Filters
-
 export default App;

@@ -87,7 +87,7 @@ const Vdashboard = (props) => {
 										<TableCell>{tagslist(item.itags)}</TableCell>
 										<TableCell>{item.iprice}</TableCell>
 										<TableCell>
-											<Button onClick={() => {
+											<Button variant="contained" onClick={() => {
 												localStorage.setItem('edit_item', JSON.stringify(item))
 												navigate("/vendor_dashboard/edit_item")
 											}}>
@@ -95,7 +95,7 @@ const Vdashboard = (props) => {
 											</Button>
 										</TableCell>
 										<TableCell>
-											<Button color="error" onClick={() => {
+											<Button variant="contained" color="error" onClick={() => {
 												axios
 													.post(`http://localhost:4000/item/${item._id}`)
 													.then((response) => {

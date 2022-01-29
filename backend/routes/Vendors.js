@@ -54,6 +54,18 @@ router.post("/login", (req, res) => {
     })
 })
 
+router.post("/getvopenvclose", (req, res) => {
+    const ishop = req.body.ishop
+    Vendor.findOne({ vshop: ishop }, (err, vendor) => {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).json({vopen: vendor.vopen, vclose: vendor.vclose});
+        }
+    })
+})
+
 router.post("/:ID", (req, res) => {
     const newVendor = {
         vname: req.body.vname,

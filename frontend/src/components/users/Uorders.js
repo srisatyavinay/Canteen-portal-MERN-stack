@@ -37,7 +37,7 @@ function replace(item, value, setValue) {
                     }}
                 />
                 <>&nbsp; &nbsp;</>
-                <Button color="success" onClick={() => {
+                <Button variant="contained" color="success" onClick={() => {
                     console.log({value: value})
                     axios
                         .post(`http://localhost:4000/order/rate/${item._id}`)

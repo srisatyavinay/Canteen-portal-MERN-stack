@@ -11,7 +11,7 @@ const OrderSchema = new Schema({
         required: true
     },
     ptime: {
-        type: Date,
+        type: String,
         required: true
     },
     itemid: {

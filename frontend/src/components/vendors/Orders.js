@@ -30,7 +30,7 @@ function replace(item) {
         return "COMPLETED"
     }
     else {
-        return (<Button onClick={() => {
+        return (<Button color="success" variant="contained" onClick={() => {
             let post = {}
             if (item.status === "PLACED") {
                 post = { status: "ACCEPTED" };
@@ -164,7 +164,7 @@ function replace(item) {
 
 function replace2(item) {
     if (item.status === "PLACED") {
-        return (<Button onClick={() => {
+        return (<Button color="error" variant="contained" onClick={() => {
             let post = { status: "REJECTED" }
             // const [money, setmoney] = useState(0);
             let money = 0;
