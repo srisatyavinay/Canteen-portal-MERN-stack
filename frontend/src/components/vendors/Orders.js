@@ -302,6 +302,8 @@ const Orders = (props) => {
             });
     }, [])
 
+    orders.reverse();
+
     return (
         <>
             <Grid container align={"center"} spacing={2}>
