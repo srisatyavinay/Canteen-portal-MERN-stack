@@ -38,79 +38,80 @@ function replace(item) {
             let post = {}
             if (item.status === "PLACED") {
                 post = { status: "ACCEPTED" };
-                let a = 0
-                axios
-                .post(`http://localhost:4000/user/getemail/${item.userid}`)
-                    .then((response) => {
-                        if (response.data.email) {
-                            var k = response.data.email
-                            // console.log({ email: k })
-                            axios
-                            .post(`http://localhost:4000/vendor/getvname`, {ishop: item.ishop})
-                                .then((response) => {
-                                    if (response.data.vname) {
-                                        var vendorname = response.data.vname
-                                        // console.log({ vendorname: vendorname, email: k })
-                                        const inputParams = {
-                                            from_name: item.ishop,
-                                            to_name: item.uname,
-                                            message: `${vendorname} accepted your order`,
-                                            to_email: k
-                                        }
-                                        emailjs.send('service_axxa5pd', 'template_kpigjw4', inputParams, 'user_yq8MYnRfd9tMW6pKykYTv')
-                                            .then((result) => {
-                                                console.log(result.text);
-                                            }, (error) => {
-                                                console.log(error.text);
-                                            });
-                                    }
-                                })
-                        }
-                    });
+                // var a = 0
                 axios
                     .post(`http://localhost:4000/vendor/vinacc/get`, { ishop: item.ishop })
                     .then((response) => {
                         if (response.data.vinacc) {
-                            a = response.data.vinacc
+                            var a = response.data.vinacc
                             console.log(response.data)
+                            if (a < 10) {
+                                axios
+                                    .post(`http://localhost:4000/user/getemail/${item.userid}`)
+                                    .then((response) => {
+                                        if (response.data.email) {
+                                            var k = response.data.email
+                                            // console.log({ email: k })
+                                            axios
+                                                .post(`http://localhost:4000/vendor/getvname`, { ishop: item.ishop })
+                                                .then((response) => {
+                                                    if (response.data.vname) {
+                                                        var vendorname = response.data.vname
+                                                        // console.log({ vendorname: vendorname, email: k })
+                                                        const inputParams = {
+                                                            from_name: item.ishop,
+                                                            to_name: item.uname,
+                                                            message: `${vendorname} accepted your order`,
+                                                            to_email: k
+                                                        }
+                                                        emailjs.send('service_axxa5pd', 'template_kpigjw4', inputParams, 'user_yq8MYnRfd9tMW6pKykYTv')
+                                                            .then((result) => {
+                                                                console.log(result.text);
+                                                            }, (error) => {
+                                                                console.log(error.text);
+                                                            });
+                                                    }
+                                                })
+                                        }
+                                    });
+                                axios
+                                    .post(`http://localhost:4000/vendor/vinacc/incr`, { ishop: item.ishop })
+                                    .then((response) => {
+                                        if (response.data.vinacc) {
+                                            let b = response.data.vinacc
+                                        }
+                                    });
+                                axios
+                                    .post(`http://localhost:4000/vendor/vactiveorders/incr`, { ishop: item.ishop })
+                                    .then((response) => {
+                                        if (response.data.vactiveorders) {
+                                            let c = response.data.vactiveorders
+                                        }
+                                    });
+                                axios
+                                    .post(`http://localhost:4000/order/${item._id}`, post)
+                                    .then((response) => {
+                                        // Swal.fire("Created " + response.data.vname);
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Moved to next stage'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                window.location.reload(false);
+                                            }
+                                        })
+                                    });
+                            }
+                            else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Cannot place order',
+                                    text: 'No.of orders in accepted/cooking stage are 10'
+                                })
+                            }
                         }
                     });
-                if (a < 10) {
-                    axios
-                        .post(`http://localhost:4000/vendor/vinacc/incr`, { ishop: item.ishop })
-                        .then((response) => {
-                            if (response.data.vinacc) {
-                                let b = response.data.vinacc
-                            }
-                        });
-                    axios
-                        .post(`http://localhost:4000/vendor/vactiveorders/incr`, { ishop: item.ishop })
-                        .then((response) => {
-                            if (response.data.vactiveorders) {
-                                let c = response.data.vactiveorders
-                            }
-                        });
-                    axios
-                        .post(`http://localhost:4000/order/${item._id}`, post)
-                        .then((response) => {
-                            // Swal.fire("Created " + response.data.vname);
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Moved to next stage'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.reload(false);
-                                }
-                            })
-                        });
-                }
-                else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Cannot place order',
-                        text: 'No.of orders in accepted/cooking stage are 10'
-                    })
-                }
+
             }
             else if (item.status === "ACCEPTED") {
                 post = { status: "COOKING" };
@@ -202,33 +203,33 @@ function replace2(item) {
             let money = 0;
             // const log_user = JSON.parse(localStorage.getItem('curr_user'));
             axios
-                    .post(`http://localhost:4000/user/getemail/${item.userid}`)
-                    .then((response) => {
-                        if (response.data.email) {
-                            var k = response.data.email
-                            // console.log({ email: k })
-                            axios
-                                .post(`http://localhost:4000/vendor/getvname`, {ishop: item.ishop})
-                                .then((response) => {
-                                    if (response.data.vname) {
-                                        var vendorname = response.data.vname
-                                        // console.log({ vendorname: vendorname })
-                                        const inputParams = {
-                                            from_name: item.ishop,
-                                            to_name: item.uname,
-                                            message: `${vendorname} rejected your order`,
-                                            to_email: k
-                                        }
-                                        emailjs.send('service_axxa5pd', 'template_kpigjw4', inputParams, 'user_yq8MYnRfd9tMW6pKykYTv')
-                                            .then((result) => {
-                                                console.log(result.text);
-                                            }, (error) => {
-                                                console.log(error.text);
-                                            });
+                .post(`http://localhost:4000/user/getemail/${item.userid}`)
+                .then((response) => {
+                    if (response.data.email) {
+                        var k = response.data.email
+                        // console.log({ email: k })
+                        axios
+                            .post(`http://localhost:4000/vendor/getvname`, { ishop: item.ishop })
+                            .then((response) => {
+                                if (response.data.vname) {
+                                    var vendorname = response.data.vname
+                                    // console.log({ vendorname: vendorname })
+                                    const inputParams = {
+                                        from_name: item.ishop,
+                                        to_name: item.uname,
+                                        message: `${vendorname} rejected your order`,
+                                        to_email: k
                                     }
-                                })
-                        }
-                    });
+                                    emailjs.send('service_axxa5pd', 'template_kpigjw4', inputParams, 'user_yq8MYnRfd9tMW6pKykYTv')
+                                        .then((result) => {
+                                            console.log(result.text);
+                                        }, (error) => {
+                                            console.log(error.text);
+                                        });
+                                }
+                            })
+                    }
+                });
             axios
                 .post(`http://localhost:4000/user/money/${item.userid}`)
                 .then((response) => {
