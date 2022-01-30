@@ -10,6 +10,10 @@ import TableRow from "@mui/material/TableRow";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import Swal from 'sweetalert2';
+import emailjs from '@emailjs/browser';
+import { init } from '@emailjs/browser';
+init("user_yq8MYnRfd9tMW6pKykYTv");
+
 // import { useNavigate } from 'react-router-dom';
 
 // function tagslist(x) {
@@ -35,6 +39,34 @@ function replace(item) {
             if (item.status === "PLACED") {
                 post = { status: "ACCEPTED" };
                 let a = 0
+                axios
+                .post(`http://localhost:4000/user/getemail/${item.userid}`)
+                    .then((response) => {
+                        if (response.data.email) {
+                            var k = response.data.email
+                            // console.log({ email: k })
+                            axios
+                            .post(`http://localhost:4000/vendor/getvname`, {ishop: item.ishop})
+                                .then((response) => {
+                                    if (response.data.vname) {
+                                        var vendorname = response.data.vname
+                                        // console.log({ vendorname: vendorname, email: k })
+                                        const inputParams = {
+                                            from_name: item.ishop,
+                                            to_name: item.uname,
+                                            message: `${vendorname} accepted your order`,
+                                            to_email: k
+                                        }
+                                        emailjs.send('service_axxa5pd', 'template_kpigjw4', inputParams, 'user_yq8MYnRfd9tMW6pKykYTv')
+                                            .then((result) => {
+                                                console.log(result.text);
+                                            }, (error) => {
+                                                console.log(error.text);
+                                            });
+                                    }
+                                })
+                        }
+                    });
                 axios
                     .post(`http://localhost:4000/vendor/vinacc/get`, { ishop: item.ishop })
                     .then((response) => {
@@ -169,6 +201,34 @@ function replace2(item) {
             // const [money, setmoney] = useState(0);
             let money = 0;
             // const log_user = JSON.parse(localStorage.getItem('curr_user'));
+            axios
+                    .post(`http://localhost:4000/user/getemail/${item.userid}`)
+                    .then((response) => {
+                        if (response.data.email) {
+                            var k = response.data.email
+                            // console.log({ email: k })
+                            axios
+                                .post(`http://localhost:4000/vendor/getvname`, {ishop: item.ishop})
+                                .then((response) => {
+                                    if (response.data.vname) {
+                                        var vendorname = response.data.vname
+                                        // console.log({ vendorname: vendorname })
+                                        const inputParams = {
+                                            from_name: item.ishop,
+                                            to_name: item.uname,
+                                            message: `${vendorname} rejected your order`,
+                                            to_email: k
+                                        }
+                                        emailjs.send('service_axxa5pd', 'template_kpigjw4', inputParams, 'user_yq8MYnRfd9tMW6pKykYTv')
+                                            .then((result) => {
+                                                console.log(result.text);
+                                            }, (error) => {
+                                                console.log(error.text);
+                                            });
+                                    }
+                                })
+                        }
+                    });
             axios
                 .post(`http://localhost:4000/user/money/${item.userid}`)
                 .then((response) => {

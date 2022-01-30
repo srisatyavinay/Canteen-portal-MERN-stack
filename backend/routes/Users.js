@@ -104,6 +104,17 @@ router.post("/money/:ID", (req, res) => {
     })
 });
 
+router.post("/getemail/:ID", (req, res) => {
+    User.findById(req.params.ID, (err, user) => {
+        if(err){
+            res.status(400).send(err);
+        }
+        else{
+            res.status(200).json({email: user.bemail});
+        }
+    })
+});
+
 router.post("/money/update/:ID", (req, res) => {
     User.findByIdAndUpdate(req.params.ID, {bwallet: req.body.money}, {new: true}, (err, user) => {
         if(err){
