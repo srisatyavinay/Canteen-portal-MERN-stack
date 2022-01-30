@@ -337,13 +337,13 @@ const Udashboard = (props) => {
                                                 })
 
                                                 if (qty) {
-                                                    // var today = new Date();
+                                                    var today = new Date();
                                                     // const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
                                                     // const time = Date.now();
                                                     const newOrder = {
                                                         userid: log_user._id,
                                                         uname: log_user.bname,
-                                                        ptime: Date.now(),
+                                                        ptime: today,
                                                         itemid: item._id,
                                                         ishop: item.ishop,
                                                         iname: item.iname,
