@@ -1,0 +1,54 @@
+version: '3.3'
+
+services:
+  mongodb:
+    image: mongo:5.0.5
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes: 
+      - ./data:/data/db
+    networks:
+      - fb-network  
+  backend-cont:
+    depends_on:
+      - mongodb
+    build:
+      context: ./backend
+    restart: unless-stopped
+    ports:
+      - 4000:4000
+    volumes:
+      - ./backend:/app/backend
+      - /app/backend/node_modules
+    networks:
+      - fb-network
+  frontend-cont:
+    depends_on:
+      - backend-cont
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    restart: on-failure
+    volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules
+    networks:
+      - fb-network
+  nginx:
+    restart: always
+    depends_on:
+      - frontend-cont
+      - backend-cont
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - 80:80
+    networks:
+      - fb-network
+networks:
+  fb-network:
+    driver: bridge
