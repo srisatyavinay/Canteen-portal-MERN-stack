@@ -38,7 +38,7 @@ const Statistics = (props) => {
 			shop: log_ven.vshop
 		}
 		axios
-			.post("http://localhost:4000/item/shop_items", shopdetails)
+			.post("/api/item/shop_items", shopdetails)
 			.then((response) => {
 				// Swal.fire("Created " + response.data.vname);
 				setItems(response.data.itemlist)

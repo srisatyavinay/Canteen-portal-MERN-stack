@@ -101,7 +101,7 @@ const EditItem = (props) => {
 
 		if (iname && iprice && iveg && Number.isInteger(Number(iprice)) && Number(iprice) > 0) {
 			axios
-				.post(`http://localhost:4000/item/edit/${curr_item._id}`, newItem)
+				.post(`/api/item/edit/${curr_item._id}`, newItem)
 				.then((response) => {
 					// Swal.fire("Created " + response.data.vname);
 					Swal.fire({

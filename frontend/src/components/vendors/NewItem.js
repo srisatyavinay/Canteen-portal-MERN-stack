@@ -88,7 +88,7 @@ const NewItem = (props) => {
 
 		if (iname && iprice && iveg && Number.isInteger(Number(iprice)) && Number(iprice) > 0) {
 			axios
-				.post(`http://localhost:4000/item/register`, newItem)
+				.post(`/api/item/register`, newItem)
 				.then((response) => {
 					// Swal.fire("Created " + response.data.vname);
 					Swal.fire({

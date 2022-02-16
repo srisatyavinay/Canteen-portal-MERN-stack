@@ -133,7 +133,7 @@ const Register = (props) => {
 
     if (bname && bemail && bnum && bage && bbatch && bpass && (bpass === bcpass) && validator.isEmail(bemail) && bnum.length === 10 && Number.isInteger(Number(bnum)) && Number.isInteger(Number(bage)) && Number(bage) >= 0 && Number(bnum) >= 0) {
       axios
-        .post("http://localhost:4000/user/register", newBuyer)
+        .post("/api/user/register", newBuyer)
         .then((response) => {
           Swal.fire({
             icon: 'success',
@@ -174,7 +174,7 @@ const Register = (props) => {
 
     if (vname && vemail && vnum && vshop && vopen && vclose && vpass && (vpass === vcpass) && ((Number(vopen.slice(0, 2)) < Number(vclose.slice(0, 2))) || ((Number(vopen.slice(0, 2)) === Number(vclose.slice(0, 2))) && (Number(vopen.slice(3, 5)) < Number(vclose.slice(3, 5))))) && validator.isEmail(vemail) && vnum.length === 10 && Number.isInteger(Number(vnum)) && Number(vnum) >= 0) {
       axios
-        .post("http://localhost:4000/vendor/vendorpost", newVendor)
+        .post("/api/vendor/vendorpost", newVendor)
         .then((response) => {
           // Swal.fire("Created " + response.data.vname);
           Swal.fire({

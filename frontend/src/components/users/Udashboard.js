@@ -28,7 +28,7 @@ function tagslist(x) {
 
 // function replace(item, log_user, shopoc, setshopoc, money, setmoney) {
 //     axios
-//         .post("http://localhost:4000/vendor/getvopenvclose", { ishop: item.ishop })
+//         .post("/api/vendor/getvopenvclose", { ishop: item.ishop })
 //         .then((response) => {
 //             setshopoc({ vopen: response.data.vopen, vclose: response.data.vclose })
 //         });
@@ -74,14 +74,14 @@ function tagslist(x) {
 //                 }
 //                 if (newOrder.iprice * newOrder.quantity <= money) {
 //                     axios
-//                         .post(`http://localhost:4000/vendor/vtotalorders/incr`, { ishop: item.ishop })
+//                         .post(`/api/vendor/vtotalorders/incr`, { ishop: item.ishop })
 //                         .then((response) => {
 //                             if (response.data.vtotalorders) {
 //                                 let g = response.data.vtotalorders
 //                             }
 //                         });
 //                     axios
-//                         .post(`http://localhost:4000/item/numtimes/incr`, { itemid: item._id })
+//                         .post(`/api/item/numtimes/incr`, { itemid: item._id })
 //                         .then((response) => {
 //                             if (response.data.numtimes) {
 //                                 let h = response.data.numtimes
@@ -89,14 +89,14 @@ function tagslist(x) {
 //                         });
 //                     const y = money - newOrder.iprice * newOrder.quantity;
 //                     axios
-//                         .post(`http://localhost:4000/user/money/update/${log_user._id}`, { money: y })
+//                         .post(`/api/user/money/update/${log_user._id}`, { money: y })
 //                         .then((response) => {
 //                             if (response.data.money) {
 //                                 let i = response.data.money
 //                             }
 //                         })
 //                     axios
-//                         .post(`http://localhost:4000/order/register`, newOrder)
+//                         .post(`/api/order/register`, newOrder)
 //                         .then((response) => {
 //                             // Swal.fire("Created " + response.data.vname);
 //                             Swal.fire({
@@ -162,7 +162,7 @@ const Udashboard = (props) => {
     useEffect(() => {
         // const log_ven = JSON.parse(localStorage.getItem('curr_user'));
         axios
-            .get("http://localhost:4000/item/")
+            .get("/api/item/")
             .then((response) => {
                 // Swal.fire("Created " + response.data.vname);
                 setItems(response.data.itemlist)
@@ -174,7 +174,7 @@ const Udashboard = (props) => {
         // const log_ven = JSON.parse(localStorage.getItem('curr_user'));
         const log_user = JSON.parse(localStorage.getItem('curr_user'));
         axios
-            .post(`http://localhost:4000/user/money/${log_user._id}`)
+            .post(`/api/user/money/${log_user._id}`)
             .then((response) => {
                 // Swal.fire("Created " + response.data.vname);
                 setmoney(response.data.money)
@@ -187,7 +187,7 @@ const Udashboard = (props) => {
         if (Number.isInteger(Number(inputMoney)) && Number(inputMoney) > 0) {
             const x = Number(inputMoney) + money;
             axios
-                .post(`http://localhost:4000/user/money/update/${log_user._id}`, { money: x })
+                .post(`/api/user/money/update/${log_user._id}`, { money: x })
                 .then((response) => {
                     Swal.fire({
                         icon: 'success',
@@ -302,7 +302,7 @@ const Udashboard = (props) => {
                                                     ishop: item.ishop,
                                                 }
                                                 axios
-                                                    .post(`http://localhost:4000/favorite/register`, favoritepost)
+                                                    .post(`/api/favorite/register`, favoritepost)
                                                     .then((response) => {
                                                         // Swal.fire("Created " + response.data.vname);
                                                         Swal.fire({
@@ -356,14 +356,14 @@ const Udashboard = (props) => {
                                                     }
                                                     if (newOrder.iprice * newOrder.quantity <= money) {
                                                         axios
-                                                            .post(`http://localhost:4000/vendor/vtotalorders/incr`, { ishop: item.ishop })
+                                                            .post(`/api/vendor/vtotalorders/incr`, { ishop: item.ishop })
                                                             .then((response) => {
                                                                 if (response.data.vtotalorders) {
                                                                     let g = response.data.vtotalorders
                                                                 }
                                                             });
                                                         axios
-                                                            .post(`http://localhost:4000/item/numtimes/incr`, { itemid: item._id })
+                                                            .post(`/api/item/numtimes/incr`, { itemid: item._id })
                                                             .then((response) => {
                                                                 if (response.data.numtimes) {
                                                                     let h = response.data.numtimes
@@ -371,14 +371,14 @@ const Udashboard = (props) => {
                                                             });
                                                         const y = money - newOrder.iprice * newOrder.quantity;
                                                         axios
-                                                            .post(`http://localhost:4000/user/money/update/${log_user._id}`, { money: y })
+                                                            .post(`/api/user/money/update/${log_user._id}`, { money: y })
                                                             .then((response) => {
                                                                 if (response.data.money) {
                                                                     let i = response.data.money
                                                                 }
                                                             })
                                                         axios
-                                                            .post(`http://localhost:4000/order/register`, newOrder)
+                                                            .post(`/api/order/register`, newOrder)
                                                             .then((response) => {
                                                                 // Swal.fire("Created " + response.data.vname);
                                                                 Swal.fire({

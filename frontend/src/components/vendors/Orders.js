@@ -40,20 +40,20 @@ function replace(item) {
                 post = { status: "ACCEPTED" };
                 // var a = 0
                 axios
-                    .post(`http://localhost:4000/vendor/vinacc/get`, { ishop: item.ishop })
+                    .post(`/api/vendor/vinacc/get`, { ishop: item.ishop })
                     .then((response) => {
                         if (response.data.vinacc) {
                             var a = response.data.vinacc
                             console.log(response.data)
                             if (a < 10) {
                                 axios
-                                    .post(`http://localhost:4000/user/getemail/${item.userid}`)
+                                    .post(`/api/user/getemail/${item.userid}`)
                                     .then((response) => {
                                         if (response.data.email) {
                                             var k = response.data.email
                                             // console.log({ email: k })
                                             axios
-                                                .post(`http://localhost:4000/vendor/getvname`, { ishop: item.ishop })
+                                                .post(`/api/vendor/getvname`, { ishop: item.ishop })
                                                 .then((response) => {
                                                     if (response.data.vname) {
                                                         var vendorname = response.data.vname
@@ -75,21 +75,21 @@ function replace(item) {
                                         }
                                     });
                                 axios
-                                    .post(`http://localhost:4000/vendor/vinacc/incr`, { ishop: item.ishop })
+                                    .post(`/api/vendor/vinacc/incr`, { ishop: item.ishop })
                                     .then((response) => {
                                         if (response.data.vinacc) {
                                             let b = response.data.vinacc
                                         }
                                     });
                                 axios
-                                    .post(`http://localhost:4000/vendor/vactiveorders/incr`, { ishop: item.ishop })
+                                    .post(`/api/vendor/vactiveorders/incr`, { ishop: item.ishop })
                                     .then((response) => {
                                         if (response.data.vactiveorders) {
                                             let c = response.data.vactiveorders
                                         }
                                     });
                                 axios
-                                    .post(`http://localhost:4000/order/${item._id}`, post)
+                                    .post(`/api/order/${item._id}`, post)
                                     .then((response) => {
                                         // Swal.fire("Created " + response.data.vname);
                                         Swal.fire({
@@ -116,7 +116,7 @@ function replace(item) {
             else if (item.status === "ACCEPTED") {
                 post = { status: "COOKING" };
                 axios
-                    .post(`http://localhost:4000/order/${item._id}`, post)
+                    .post(`/api/order/${item._id}`, post)
                     .then((response) => {
                         // Swal.fire("Created " + response.data.vname);
                         Swal.fire({
@@ -132,14 +132,14 @@ function replace(item) {
             else if (item.status === "COOKING") {
                 post = { status: "READY FOR PICKUP" };
                 axios
-                    .post(`http://localhost:4000/vendor/vinacc/decr`, { ishop: item.ishop })
+                    .post(`/api/vendor/vinacc/decr`, { ishop: item.ishop })
                     .then((response) => {
                         if (response.data.vinacc) {
                             let d = response.data.vinacc
                         }
                     });
                 axios
-                    .post(`http://localhost:4000/order/${item._id}`, post)
+                    .post(`/api/order/${item._id}`, post)
                     .then((response) => {
                         // Swal.fire("Created " + response.data.vname);
                         Swal.fire({
@@ -155,28 +155,28 @@ function replace(item) {
             else if (item.status === "READY FOR PICKUP") {
                 post = { status: "COMPLETED" };
                 axios
-                    .post(`http://localhost:4000/vendor/vactiveorders/decr`, { ishop: item.ishop })
+                    .post(`/api/vendor/vactiveorders/decr`, { ishop: item.ishop })
                     .then((response) => {
                         if (response.data.vactiveorders) {
                             let e = response.data.vactiveorders
                         }
                     });
                 axios
-                    .post(`http://localhost:4000/vendor/vcompleted/incr`, { ishop: item.ishop })
+                    .post(`/api/vendor/vcompleted/incr`, { ishop: item.ishop })
                     .then((response) => {
                         if (response.data.vcompleted) {
                             let f = response.data.vcompleted
                         }
                     });
                 axios
-                    .post(`http://localhost:4000/item/comnumtimes/incr`, { itemid: item.itemid })
+                    .post(`/api/item/comnumtimes/incr`, { itemid: item.itemid })
                     .then((response) => {
                         if (response.data.comnumtimes) {
                             let n = response.data.comnumtimes
                         }
                     });
                 axios
-                    .post(`http://localhost:4000/order/${item._id}`, post)
+                    .post(`/api/order/${item._id}`, post)
                     .then((response) => {
                         // Swal.fire("Created " + response.data.vname);
                         Swal.fire({
@@ -203,13 +203,13 @@ function replace2(item) {
             let money = 0;
             // const log_user = JSON.parse(localStorage.getItem('curr_user'));
             axios
-                .post(`http://localhost:4000/user/getemail/${item.userid}`)
+                .post(`/api/user/getemail/${item.userid}`)
                 .then((response) => {
                     if (response.data.email) {
                         var k = response.data.email
                         // console.log({ email: k })
                         axios
-                            .post(`http://localhost:4000/vendor/getvname`, { ishop: item.ishop })
+                            .post(`/api/vendor/getvname`, { ishop: item.ishop })
                             .then((response) => {
                                 if (response.data.vname) {
                                     var vendorname = response.data.vname
@@ -231,14 +231,14 @@ function replace2(item) {
                     }
                 });
             axios
-                .post(`http://localhost:4000/user/money/${item.userid}`)
+                .post(`/api/user/money/${item.userid}`)
                 .then((response) => {
                     // Swal.fire("Created " + response.data.vname);
                     money = response.data.money
                     // console.log(response.data.itemlist);
                     const y = money + item.iprice * item.quantity
                     axios
-                        .post(`http://localhost:4000/user/money/update/${item.userid}`, { money: y })
+                        .post(`/api/user/money/update/${item.userid}`, { money: y })
                         .then((response) => {
                             if (response.data.money) {
                                 let i = response.data.money
@@ -247,7 +247,7 @@ function replace2(item) {
                 });
 
             axios
-                .post(`http://localhost:4000/vendor/vrejected/incr`, { ishop: item.ishop })
+                .post(`/api/vendor/vrejected/incr`, { ishop: item.ishop })
                 .then((response) => {
                     if (response.data.vrejected) {
                         let l = response.data.vrejected
@@ -255,7 +255,7 @@ function replace2(item) {
                 });
 
             axios
-                .post(`http://localhost:4000/order/${item._id}`, post)
+                .post(`/api/order/${item._id}`, post)
                 .then((response) => {
                     // Swal.fire("Created " + response.data.vname);
                     Swal.fire({
@@ -294,7 +294,7 @@ const Orders = (props) => {
         const log_ven = JSON.parse(localStorage.getItem('curr_vendor'));
         // const log_user = JSON.parse(localStorage.getItem('curr_user'));
         axios
-            .post("http://localhost:4000/order/vendor_orders/", { ishop: log_ven.vshop })
+            .post("/api/order/vendor_orders/", { ishop: log_ven.vshop })
             .then((response) => {
                 // Swal.fire("Created " + response.data.vname);
                 setOrders(response.data.orderlist)

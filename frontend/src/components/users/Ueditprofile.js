@@ -89,7 +89,7 @@ const Ueditprofile = (props) => {
 
         if (bname && bemail && bnum && bage && bbatch && bpass && (bpass === bcpass) && Number.isInteger(Number(bnum)) && Number.isInteger(Number(bage)) && Number(bage) >= 0 && Number(bnum) >= 0) {
             axios
-                .post(`http://localhost:4000/user/${log_user._id}`, newBuyer)
+                .post(`/api/user/${log_user._id}`, newBuyer)
                 .then((response) => {
                     Swal.fire({
                         icon: 'success',

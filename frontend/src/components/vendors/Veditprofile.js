@@ -108,7 +108,7 @@ const Veditprofile = (props) => {
 
 		if (vname && vemail && vnum && vshop && vopen && vclose && vpass && (vpass === vcpass) && Number.isInteger(Number(vnum)) && Number(vnum) >= 0) {
 			axios
-				.post(`http://localhost:4000/vendor/${log_ven._id}`, newVendor)
+				.post(`/api/vendor/${log_ven._id}`, newVendor)
 				.then((response) => {
 					// Swal.fire("Created " + response.data.vname);
 					Swal.fire({

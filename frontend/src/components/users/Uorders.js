@@ -40,20 +40,20 @@ function replace(item, value, setValue) {
                 <Button variant="contained" color="success" onClick={() => {
                     console.log({value: value})
                     axios
-                        .post(`http://localhost:4000/order/rate/${item._id}`)
+                        .post(`/api/order/rate/${item._id}`)
                         .then((response) => {
                             // Swal.fire("Created " + response.data.vname);
                             let m = response.data
                         });
                     axios
-                        .post(`http://localhost:4000/item/getratingandcomorders/${item.itemid}`)
+                        .post(`/api/item/getratingandcomorders/${item.itemid}`)
                         .then((response) => {
                             const prevrating = response.data.irating
                             const prevcomnumtimes = response.data.comnumtimes
                             const newrating = ((value + (prevrating * (prevcomnumtimes - 1))) / (prevcomnumtimes))
                             console.log({newrating: newrating})
                             axios
-                                .post(`http://localhost:4000/item/updaterating/${item.itemid}`, { newrating: Math.round(newrating) })
+                                .post(`/api/item/updaterating/${item.itemid}`, { newrating: Math.round(newrating) })
                                 .then((response) => {
                                     let o = response.data
                                     Swal.fire({
@@ -97,7 +97,7 @@ const Uorders = (props) => {
         // const log_ven = JSON.parse(localStorage.getItem('curr_user'));
         const log_user = JSON.parse(localStorage.getItem('curr_user'));
         axios
-            .post("http://localhost:4000/order/user_orders/", { userid: log_user._id })
+            .post("/api/order/user_orders/", { userid: log_user._id })
             .then((response) => {
                 // Swal.fire("Created " + response.data.vname);
                 setOrders(response.data.orderlist)

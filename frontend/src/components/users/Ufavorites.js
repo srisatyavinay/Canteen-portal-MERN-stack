@@ -31,7 +31,7 @@ const Ufavorites = (props) => {
         // const log_ven = JSON.parse(localStorage.getItem('curr_user'));
         const log_user = JSON.parse(localStorage.getItem('curr_user'));
         axios
-            .post(`http://localhost:4000/favorite/${log_user._id}`)
+            .post(`/api/favorite/${log_user._id}`)
             .then((response) => {
                 // Swal.fire("Created " + response.data.vname);
                 setItems(response.data.favorites)

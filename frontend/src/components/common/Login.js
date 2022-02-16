@@ -53,7 +53,7 @@ const Login = (props) => {
 
     if (lbemail && lbpass) {
       axios
-        .post("http://localhost:4000/user/login", buyer)
+        .post("/api/user/login", buyer)
         .then((response) => {
           Swal.fire(response.data.message)
           // props.setLoginUser(response.data.user);
@@ -86,7 +86,7 @@ const Login = (props) => {
 
     if (lvemail && lvpass) {
       axios
-        .post("http://localhost:4000/vendor/login", vendor)
+        .post("/api/vendor/login", vendor)
         .then((response) => {
           Swal.fire(response.data.message);
           // props.setLoginVendor(response.data.vendor);
